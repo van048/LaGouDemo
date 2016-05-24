@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.ben.lagoudemo.Login.LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/login_wander"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/login_wander_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="随便逛逛"/>
+        <ImageView
+            android:layout_toRightOf="@id/login_wander_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/arrow_down_float"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/splash_logo_width_and_height"
+        android:layout_height="@dimen/splash_logo_width_and_height"
+        android:src="@android:drawable/ic_delete"/>
+
+    <RelativeLayout
+        android:layout_below="@id/login_logo"
+        android:id="@+id/login_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:id="@+id/login_input_username"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/login_input_username_icon"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_btn_speak_now"/>
+            <EditText
+                android:id="@+id/login_input_username_edittext"
+                android:hint="请输入已验证的手机号或邮箱"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/login_input_username"
+            android:id="@+id/login_input_pw"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/login_input_pw_icon"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_lock_lock"/>
+            <EditText
+                android:id="@+id/login_input_pw_edittext"
+                android:hint="请输入密码"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/login_input"
+        android:id="@+id/login_forget_pw"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/login_forget_pw_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/arrow_down_float"/>
+        <TextView
+            android:layout_toRightOf="@id/login_forget_pw_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="忘记密码"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/login_forget_pw"
+        android:id="@+id/login_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="登录"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/login_login_btn"
+        android:id="@+id/login_reg_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="注册拉勾"/>
+    </RelativeLayout>
+
+</RelativeLayout>
