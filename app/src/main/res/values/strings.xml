@@ -4,4 +4,10 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="login_wander">随便逛逛</string>
+    <string name="login_pw_hint">请输入密码</string>
+    <string name="login_username_hint">请输入已验证的手机号或邮箱</string>
+    <string name="login_forget_pw">忘记密码</string>
+    <string name="login_login">登录</string>
+    <string name="login_reg">注册拉勾</string>
 </resources>

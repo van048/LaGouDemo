@@ -6,9 +6,9 @@
     tools:context="cn.ben.lagoudemo.Splash.SplashActivity">
 
     <ImageView
-        android:layout_centerInParent="true"
         android:layout_width="@dimen/splash_logo_width_and_height"
         android:layout_height="@dimen/splash_logo_width_and_height"
-        android:src="@android:drawable/ic_delete"/>
+        android:layout_centerInParent="true"
+        android:src="@android:drawable/ic_delete" />
 
 </RelativeLayout>

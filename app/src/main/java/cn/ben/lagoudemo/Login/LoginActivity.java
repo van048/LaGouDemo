@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import cn.ben.lagoudemo.R;
 
-public class LoginActivity extends Activity implements LoginView{
+public class LoginActivity extends Activity implements LoginView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

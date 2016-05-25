@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import cn.ben.lagoudemo.R;
 
-public class SplashActivity extends Activity implements SplashView{
+public class SplashActivity extends Activity implements SplashView {
 
     private SplashPresenter presenter;
 
