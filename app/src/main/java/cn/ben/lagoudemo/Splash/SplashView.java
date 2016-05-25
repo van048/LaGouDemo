@@ -1,9 +1,6 @@
 package cn.ben.lagoudemo.Splash;
 
-/**
- * Created by Administrator on 2016/5/23.
- */
-public interface SplashView {
+interface SplashView {
 
-    void disappear();
+    void moveToNextView();
 }

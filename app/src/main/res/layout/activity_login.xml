@@ -54,7 +54,7 @@
                 android:src="@android:drawable/ic_btn_speak_now" />
 
             <EditText
-                android:id="@+id/login_input_username_edittext"
+                android:id="@+id/login_input_username_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
@@ -74,7 +74,7 @@
                 android:src="@android:drawable/ic_lock_lock" />
 
             <EditText
-                android:id="@+id/login_input_pw_edittext"
+                android:id="@+id/login_input_pw_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"

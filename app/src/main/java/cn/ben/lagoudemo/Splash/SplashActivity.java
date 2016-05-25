@@ -1,10 +1,11 @@
 package cn.ben.lagoudemo.Splash;
 
 import android.app.Activity;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
+import cn.ben.lagoudemo.Login.LoginActivity;
 import cn.ben.lagoudemo.R;
 
 public class SplashActivity extends Activity implements SplashView {
@@ -23,8 +24,9 @@ public class SplashActivity extends Activity implements SplashView {
     }
 
     @Override
-    public void disappear() {
-        //// TODO: 2016/5/23
+    public void moveToNextView() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
         finish();
     }
 }

@@ -2,12 +2,9 @@ package cn.ben.lagoudemo.Splash;
 
 import android.os.Handler;
 
-/**
- * Created by Administrator on 2016/5/23.
- */
 public class SplashPresenterImpl implements SplashPresenter {
-    private SplashView splashView;
-    private SplashInteractor splashInteractor;
+    private final SplashView splashView;
+    private final SplashInteractor splashInteractor;
 
     public SplashPresenterImpl(SplashView splashView) {
         this.splashView = splashView;
@@ -21,7 +18,7 @@ public class SplashPresenterImpl implements SplashPresenter {
                 @Override
                 public void run() {
                     if (splashView != null) {
-                        splashView.disappear();
+                        splashView.moveToNextView();
                     }
                 }
             }, 3000);
