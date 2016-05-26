@@ -10,6 +10,7 @@ import cn.ben.lagoudemo.R;
 
 public class SplashActivity extends Activity implements SplashView {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private SplashPresenter presenter;
 
     @Override

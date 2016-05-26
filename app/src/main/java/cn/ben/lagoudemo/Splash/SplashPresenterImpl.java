@@ -4,6 +4,7 @@ import android.os.Handler;
 
 public class SplashPresenterImpl implements SplashPresenter {
     private final SplashView splashView;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final SplashInteractor splashInteractor;
 
     public SplashPresenterImpl(SplashView splashView) {
