@@ -6,16 +6,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
-
 import cn.ben.lagoudemo.R;
 
 public class LoginActivity extends Activity implements LoginView, View.OnClickListener {
 
-    @SuppressWarnings("unused")
-    private static final String TAG = "LoginActivity";
-    @SuppressWarnings("FieldCanBeLocal")
+    private LoginPresenter loginPresenter;
     private View login_wander;
 
     @Override
@@ -23,18 +18,13 @@ public class LoginActivity extends Activity implements LoginView, View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        loginPresenter = new LoginPresenterImpl(this, this);
+
         login_wander = findViewById(R.id.login_wander);
         login_wander.setOnClickListener(this);
-
-        KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
-            @Override
-            public void onVisibilityChanged(boolean isOpen) {
-                startAnim(isOpen);
-            }
-        });
     }
 
-    private void startAnim(boolean isOpen) {
+    public void startAnim(boolean isOpen) {
         Animation scaleDown = AnimationUtils.loadAnimation(this, R.anim.login_scale_down_anim);
         Animation moveUp = AnimationUtils.loadAnimation(this, R.anim.login_move_up_anim);
         Animation scaleUp = AnimationUtils.loadAnimation(this, R.anim.login_scale_up_anim);
