@@ -1,17 +1,29 @@
 package cn.ben.lagoudemo.Login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import cn.ben.lagoudemo.R;
 
-public class LoginActivity extends Activity implements LoginView, View.OnClickListener {
+public class LoginActivity extends Activity implements LoginView, View.OnClickListener, View.OnFocusChangeListener {
 
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private LoginPresenter loginPresenter;
+    @SuppressWarnings("FieldCanBeLocal")
     private View login_wander;
+    private ImageView login_input_username_icon;
+    private EditText login_input_username_edit_text;
+    private EditText login_input_pw_edit_text;
+    private ImageView login_input_pw_icon;
+    private View animGroup1;
+    private View animGroup2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +34,24 @@ public class LoginActivity extends Activity implements LoginView, View.OnClickLi
 
         login_wander = findViewById(R.id.login_wander);
         login_wander.setOnClickListener(this);
+        login_input_username_edit_text = (EditText) findViewById(R.id.login_input_username_edit_text);
+        login_input_username_icon = (ImageView) findViewById(R.id.login_input_username_icon);
+        login_input_pw_edit_text = (EditText) findViewById(R.id.login_input_pw_edit_text);
+        login_input_pw_icon = (ImageView) findViewById(R.id.login_input_pw_icon);
+        animGroup1 = findViewById(R.id.login_anim_group_1);
+        animGroup2 = findViewById(R.id.login_anim_group_2);
+
+        login_input_username_edit_text.setOnFocusChangeListener(this);
+        login_input_pw_edit_text.setOnFocusChangeListener(this);
+        login_input_username_icon.setOnClickListener(this);
+        login_input_pw_icon.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        login_input_username_edit_text.clearFocus();
+        login_input_pw_edit_text.clearFocus();
     }
 
     public void startAnim(boolean isOpen) {
@@ -29,8 +59,6 @@ public class LoginActivity extends Activity implements LoginView, View.OnClickLi
         Animation moveUp = AnimationUtils.loadAnimation(this, R.anim.login_move_up_anim);
         Animation scaleUp = AnimationUtils.loadAnimation(this, R.anim.login_scale_up_anim);
         Animation moveDown = AnimationUtils.loadAnimation(this, R.anim.login_move_down_anim);
-        final View animGroup1 = findViewById(R.id.login_anim_group_1);
-        final View animGroup2 = findViewById(R.id.login_anim_group_2);
         Animation anim1, anim2;
 
         if (isOpen) {
@@ -114,13 +142,53 @@ public class LoginActivity extends Activity implements LoginView, View.OnClickLi
             case R.id.login_wander:
                 moveToMainPage();
                 break;
+            case R.id.login_input_username_icon:
+                clickOnIconBeforeEditText(login_input_username_edit_text);
+                break;
+            case R.id.login_input_pw_icon:
+                clickOnIconBeforeEditText(login_input_pw_edit_text);
+                break;
             default:
                 break;
         }
     }
 
+    private void clickOnIconBeforeEditText(EditText v) {
+        v.requestFocus();
+        v.setSelection(0);
+        showKeyboard(v);
+    }
+
+    private void showKeyboard(EditText v) {
+        final InputMethodManager inputMethodManager = (InputMethodManager) this
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
+    }
+
     private void moveToMainPage() {
         //// TODO: 2016/5/25
         System.out.println("moveToMainPage");
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.login_input_username_edit_text:
+                if (hasFocus) {
+                    login_input_username_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_menu_month, getTheme()));
+                } else {
+                    login_input_username_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_btn_speak_now, getTheme()));
+                }
+                break;
+            case R.id.login_input_pw_edit_text:
+                if (hasFocus) {
+                    login_input_pw_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_menu_day, getTheme()));
+                } else {
+                    login_input_pw_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_lock_lock, getTheme()));
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
