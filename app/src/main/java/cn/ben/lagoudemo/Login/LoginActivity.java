@@ -3,12 +3,14 @@ package cn.ben.lagoudemo.Login;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import cn.ben.lagoudemo.R;
 
@@ -189,6 +191,29 @@ public class LoginActivity extends Activity implements LoginView, View.OnClickLi
                 break;
             default:
                 break;
+        }
+    }
+
+    private int backPressedCount = 0;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final int BACK_PRESSED_CHECK_TIME = 2000;
+    private final Handler BACK_PRESSED_CHECK_HANDLER = new Handler();
+    private boolean backPressedCheckEnabled = true;
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedCheckEnabled && backPressedCount == 0) {
+            backPressedCount++;
+            Toast.makeText(LoginActivity.this, R.string.toast_back_pressed, Toast.LENGTH_SHORT).show();
+            BACK_PRESSED_CHECK_HANDLER.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    backPressedCount = 0;
+                }
+            }, BACK_PRESSED_CHECK_TIME);
+        } else {
+            backPressedCheckEnabled = false;
+            super.onBackPressed();
         }
     }
 }

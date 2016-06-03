@@ -6,4 +6,5 @@
     <string name="login_forget_pw">忘记密码</string>
     <string name="login_login">登录</string>
     <string name="login_reg">注册拉勾</string>
+    <string name="toast_back_pressed">再按一次退出拉勾</string>
 </resources>
