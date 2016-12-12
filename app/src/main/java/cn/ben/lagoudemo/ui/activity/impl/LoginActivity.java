@@ -1,4 +1,4 @@
-package cn.ben.lagoudemo.Login;
+package cn.ben.lagoudemo.ui.activity.impl;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,11 +13,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import cn.ben.lagoudemo.R;
+import cn.ben.lagoudemo.ui.activity.ILoginView;
+import cn.ben.lagoudemo.ui.presenter.ILoginPresenter;
+import cn.ben.lagoudemo.ui.presenter.impl.LoginPresenterImpl;
 
-public class LoginActivity extends Activity implements LoginView, View.OnClickListener, View.OnFocusChangeListener {
+public class LoginActivity extends Activity implements ILoginView, View.OnClickListener, View.OnFocusChangeListener {
 
     @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private LoginPresenter loginPresenter;
+    private ILoginPresenter loginPresenter;
     @SuppressWarnings("FieldCanBeLocal")
     private View login_wander;
     private ImageView login_input_username_icon;

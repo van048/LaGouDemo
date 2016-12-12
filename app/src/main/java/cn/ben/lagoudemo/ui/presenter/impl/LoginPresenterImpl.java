@@ -1,16 +1,19 @@
-package cn.ben.lagoudemo.Login;
+package cn.ben.lagoudemo.ui.presenter.impl;
 
 import android.app.Activity;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
-class LoginPresenterImpl implements LoginPresenter {
-    private final LoginView loginView;
+import cn.ben.lagoudemo.ui.activity.ILoginView;
+import cn.ben.lagoudemo.ui.presenter.ILoginPresenter;
+
+public class LoginPresenterImpl implements ILoginPresenter {
+    private final ILoginView loginView;
     @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private final Activity loginActivity;
 
-    public LoginPresenterImpl(final LoginView loginView, Activity loginActivity) {
+    public LoginPresenterImpl(final ILoginView loginView, Activity loginActivity) {
         this.loginView = loginView;
         this.loginActivity = loginActivity;
 

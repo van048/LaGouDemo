@@ -1,15 +1,15 @@
-package cn.ben.lagoudemo.Splash;
+package cn.ben.lagoudemo.ui.presenter.impl;
 
 import android.os.Handler;
 
-public class SplashPresenterImpl implements SplashPresenter {
-    private final SplashView splashView;
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private final SplashInteractor splashInteractor;
+import cn.ben.lagoudemo.ui.activity.ISplashView;
+import cn.ben.lagoudemo.ui.presenter.ISplashPresenter;
 
-    public SplashPresenterImpl(SplashView splashView) {
+public class SplashPresenterImpl implements ISplashPresenter {
+    private final ISplashView splashView;
+
+    public SplashPresenterImpl(ISplashView splashView) {
         this.splashView = splashView;
-        this.splashInteractor = new SplashInteractorImpl();
     }
 
     @Override

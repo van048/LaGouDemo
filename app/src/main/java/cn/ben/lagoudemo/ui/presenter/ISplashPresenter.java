@@ -1,7 +1,7 @@
-package cn.ben.lagoudemo.Splash;
+package cn.ben.lagoudemo.ui.presenter;
 
 import android.os.Handler;
 
-interface SplashPresenter {
+public interface ISplashPresenter {
     void countDownToDisappear(Handler handler);
 }

@@ -1,17 +1,19 @@
-package cn.ben.lagoudemo.Splash;
+package cn.ben.lagoudemo.ui.activity.impl;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import cn.ben.lagoudemo.Login.LoginActivity;
 import cn.ben.lagoudemo.R;
+import cn.ben.lagoudemo.ui.activity.ISplashView;
+import cn.ben.lagoudemo.ui.presenter.ISplashPresenter;
+import cn.ben.lagoudemo.ui.presenter.impl.SplashPresenterImpl;
 
-public class SplashActivity extends Activity implements SplashView {
+public class SplashActivity extends Activity implements ISplashView {
 
     @SuppressWarnings("FieldCanBeLocal")
-    private SplashPresenter presenter;
+    private ISplashPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
