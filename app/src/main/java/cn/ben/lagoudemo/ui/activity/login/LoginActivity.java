@@ -46,7 +46,10 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
     @Override
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
+        setUpAnimator();
+    }
 
+    private void setUpAnimator() {
         mValueAnimatorKeyboardOpen = ValueAnimator.ofFloat(0, 1);
         mValueAnimatorKeyboardOpen.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -54,11 +57,9 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
                 float value = (float) valueAnimator.getAnimatedValue();
                 value += (1 - mLatestScaleClose);
                 if (value > 1) value = 1;
-
-                mLatestScaleOpen = 1 - value;
-                login_animGroup_logo.setScaleX(1 - value);
-                login_animGroup_logo.setScaleY(1 - value);
-                login_animGroup_edit_text.setTranslationY(EDIT_TEXT_ANIM_FINAL_Y * value);
+                value = 1 - value;
+                mLatestScaleOpen = value;
+                updateAnimGroupPos(value);
             }
         });
 
@@ -69,17 +70,19 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
                 float value = (float) valueAnimator.getAnimatedValue();
                 value += mLatestScaleOpen;
                 if (value > 1) value = 1;
-
                 mLatestScaleClose = value;
-                login_animGroup_logo.setScaleX(value);
-                login_animGroup_logo.setScaleY(value);
-                login_animGroup_edit_text.setTranslationY(EDIT_TEXT_ANIM_FINAL_Y * (1 - value));
-
+                updateAnimGroupPos(value);
             }
         });
 
         mValueAnimatorKeyboardOpen.setDuration(ANIM_DURATION);
         mValueAnimatorKeyboardClose.setDuration(ANIM_DURATION);
+    }
+
+    private void updateAnimGroupPos(float logoScale) {
+        login_animGroup_logo.setScaleX(logoScale);
+        login_animGroup_logo.setScaleY(logoScale);
+        login_animGroup_edit_text.setTranslationY(EDIT_TEXT_ANIM_FINAL_Y * (1 - logoScale));
     }
 
     @Override
