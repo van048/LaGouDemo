@@ -119,8 +119,7 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 b_user_name_empty = StringUtils.isEmpty(charSequence);
-                login_login_btn.setEnabled(!b_user_name_empty && !b_user_pw_empty);
-                login_input_user_name_delete.setVisibility(b_user_name_empty ? View.INVISIBLE : View.VISIBLE);
+                updateOnTextChanged(login_input_user_name_delete, b_user_name_empty);
             }
 
             @Override
@@ -140,8 +139,7 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 b_user_pw_empty = StringUtils.isEmpty(charSequence);
-                login_login_btn.setEnabled(!b_user_name_empty && !b_user_pw_empty);
-                login_input_pw_delete.setVisibility(b_user_pw_empty ? View.INVISIBLE : View.VISIBLE);
+                updateOnTextChanged(login_input_pw_delete, b_user_pw_empty);
             }
 
             @Override
@@ -159,6 +157,11 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
                 startAnim(isOpen);
             }
         });
+    }
+
+    private void updateOnTextChanged(View deleteView, boolean isEmpty) {
+        login_login_btn.setEnabled(!b_user_name_empty && !b_user_pw_empty);
+        deleteView.setVisibility(isEmpty ? View.INVISIBLE : View.VISIBLE);
     }
 
     @Override
