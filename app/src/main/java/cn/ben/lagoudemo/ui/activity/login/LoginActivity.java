@@ -1,12 +1,17 @@
 package cn.ben.lagoudemo.ui.activity.login;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.blankj.utilcode.utils.StringUtils;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
@@ -16,13 +21,63 @@ import cn.ben.lagoudemo.R;
 
 public class LoginActivity extends BaseEntryActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
-    private ImageView login_input_username_icon;
-    private EditText login_input_username_edit_text;
+    private static final float EDIT_TEXT_ANIM_FINAL_Y = -120;
+    private static final long ANIM_DURATION = 300;
+
+    private ImageView login_input_user_name_icon;
+    private EditText login_input_user_name_edit_text;
     private EditText login_input_pw_edit_text;
     private ImageView login_input_pw_icon;
-    private View animGroup1;
-    private View animGroup2;
-    private boolean isKeyboardOpen = false;
+    private View login_animGroup_logo;
+    private View login_animGroup_edit_text;
+    private Button login_login_btn;
+
+    private boolean isKeyboardOpen = false; // latest param of startAnim
+    private ValueAnimator mValueAnimatorKeyboardOpen, mValueAnimatorKeyboardClose;
+    private float mLatestScaleOpen, mLatestScaleClose = 1;
+    
+    private boolean b_user_name_empty = true;
+    private boolean b_user_pw_empty = true;
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
+        super.init(savedInstanceState);
+
+        mValueAnimatorKeyboardOpen = ValueAnimator.ofFloat(0, 1);
+        mValueAnimatorKeyboardOpen.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float value = (float) valueAnimator.getAnimatedValue();
+                value += (1 - mLatestScaleClose);
+                if (value > 1) value = 1;
+
+                mLatestScaleOpen = 1 - value;
+                login_animGroup_logo.setScaleX(1 - value);
+                login_animGroup_logo.setScaleY(1 - value);
+                login_animGroup_edit_text.setTranslationY(EDIT_TEXT_ANIM_FINAL_Y * value);
+            }
+        });
+
+        mValueAnimatorKeyboardClose = ValueAnimator.ofFloat(0, 1);
+        mValueAnimatorKeyboardClose.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float value = (float) valueAnimator.getAnimatedValue();
+                value += mLatestScaleOpen;
+                if (value > 1) value = 1;
+
+                mLatestScaleClose = value;
+                login_animGroup_logo.setScaleX(value);
+                login_animGroup_logo.setScaleY(value);
+                login_animGroup_edit_text.setTranslationY(EDIT_TEXT_ANIM_FINAL_Y * (1 - value));
+
+            }
+        });
+
+        mValueAnimatorKeyboardOpen.setDuration(ANIM_DURATION);
+        mValueAnimatorKeyboardClose.setDuration(ANIM_DURATION);
+    }
+
     @Override
     protected int getThemeResourceID() {
         return R.style.DefaultFullScreenTheme;
@@ -37,17 +92,53 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
     protected void setUpView() {
         super.setUpView();
 
-        login_input_username_edit_text = $(R.id.login_input_username_edit_text);
-        login_input_username_icon = $(R.id.login_input_username_icon);
+        login_input_user_name_edit_text = $(R.id.login_input_username_edit_text);
+        login_input_user_name_icon = $(R.id.login_input_username_icon);
         login_input_pw_edit_text = $(R.id.login_input_pw_edit_text);
         login_input_pw_icon = $(R.id.login_input_pw_icon);
-        animGroup1 = $(R.id.login_anim_group_1);
-        animGroup2 = $(R.id.login_anim_group_2);
+        login_login_btn = $(R.id.login_login_btn);
+        login_animGroup_logo = $(R.id.login_anim_group_1);
+        login_animGroup_edit_text = $(R.id.login_anim_group_2);
 
-        login_input_username_edit_text.setOnFocusChangeListener(this);
+        login_input_user_name_edit_text.setOnFocusChangeListener(this);
+        login_input_user_name_edit_text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                b_user_name_empty = StringUtils.isEmpty(charSequence);
+                login_login_btn.setEnabled(!b_user_name_empty && !b_user_pw_empty);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         login_input_pw_edit_text.setOnFocusChangeListener(this);
-        login_input_username_icon.setOnClickListener(this);
+        login_input_pw_edit_text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                b_user_pw_empty = StringUtils.isEmpty(charSequence);
+                login_login_btn.setEnabled(!b_user_name_empty && !b_user_pw_empty);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        login_input_user_name_icon.setOnClickListener(this);
         login_input_pw_icon.setOnClickListener(this);
+        login_login_btn.setEnabled(false);
 
         KeyboardVisibilityEvent.setEventListener(LoginActivity.this, new KeyboardVisibilityEventListener() {
             @Override
@@ -60,101 +151,32 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
     @Override
     protected void onPause() {
         super.onPause();
-        login_input_username_edit_text.clearFocus();
+
+        isKeyboardOpen = false;
+        login_animGroup_logo.setScaleX(1);
+        login_animGroup_logo.setScaleY(1);
+        login_animGroup_edit_text.setTranslationY(0);
+        login_input_user_name_edit_text.clearFocus();
         login_input_pw_edit_text.clearFocus();
     }
 
     public void startAnim(boolean isOpen) {
+        //  animate once
         if (isOpen == isKeyboardOpen) return;
+
+        mValueAnimatorKeyboardOpen.cancel();
+        mValueAnimatorKeyboardClose.cancel();
+
         isKeyboardOpen = isOpen;
-
-        Animation scaleDown = AnimationUtils.loadAnimation(this, R.anim.login_scale_down_anim);
-        Animation moveUp = AnimationUtils.loadAnimation(this, R.anim.login_move_up_anim);
-        Animation scaleUp = AnimationUtils.loadAnimation(this, R.anim.login_scale_up_anim);
-        Animation moveDown = AnimationUtils.loadAnimation(this, R.anim.login_move_down_anim);
-        Animation anim1, anim2;
-
-        if (isOpen) {
-            anim1 = scaleDown;
-            anim2 = moveUp;
-            anim1.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    animGroup1.setScaleX(0f);
-                    animGroup1.setScaleY(0f);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            anim2.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    animGroup2.setTranslationY(-120f);
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-        } else {
-            anim1 = scaleUp;
-            anim2 = moveDown;
-            anim1.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    animGroup1.setScaleX(1f);
-                    animGroup1.setScaleY(1f);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            anim2.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    animGroup2.setTranslationY(0);
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-        }
-
-        animGroup1.startAnimation(anim1);
-        animGroup2.startAnimation(anim2);
+        if (isKeyboardOpen) mValueAnimatorKeyboardOpen.start();
+        else mValueAnimatorKeyboardClose.start();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_input_username_icon:
-                clickOnIconBeforeEditText(login_input_username_edit_text);
+                clickOnIconBeforeEditText(login_input_user_name_edit_text);
                 break;
             case R.id.login_input_pw_icon:
                 clickOnIconBeforeEditText(login_input_pw_edit_text);
@@ -181,14 +203,14 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.login_input_username_edit_text:
                 if (hasFocus) {
-                    login_input_username_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_menu_month, getTheme()));
+                    login_input_user_name_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_media_pause, getTheme()));
                 } else {
-                    login_input_username_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_btn_speak_now, getTheme()));
+                    login_input_user_name_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_media_play, getTheme()));
                 }
                 break;
             case R.id.login_input_pw_edit_text:
                 if (hasFocus) {
-                    login_input_pw_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_menu_day, getTheme()));
+                    login_input_pw_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_lock_idle_lock, getTheme()));
                 } else {
                     login_input_pw_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_lock_lock, getTheme()));
                 }
