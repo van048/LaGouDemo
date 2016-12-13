@@ -6,6 +6,11 @@ import cn.ben.lagoudemo.ui.activity.login.LoginActivity;
 public class SplashActivity extends ben.cn.library.activity.BaseSplashActivity {
 
     @Override
+    protected int getThemeResourceID() {
+        return R.style.SplashTheme;
+    }
+
+    @Override
     protected int getLayoutResourceID() {
         return R.layout.activity_splash;
     }

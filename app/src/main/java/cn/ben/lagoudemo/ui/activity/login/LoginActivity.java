@@ -26,16 +26,20 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
 
     private ImageView login_input_user_name_icon;
     private EditText login_input_user_name_edit_text;
-    private EditText login_input_pw_edit_text;
+    private ImageView login_input_user_name_delete;
     private ImageView login_input_pw_icon;
+    private EditText login_input_pw_edit_text;
+    private ImageView login_input_pw_delete;
     private View login_animGroup_logo;
     private View login_animGroup_edit_text;
     private Button login_login_btn;
 
+    // animation
     private boolean isKeyboardOpen = false; // latest param of startAnim
     private ValueAnimator mValueAnimatorKeyboardOpen, mValueAnimatorKeyboardClose;
+    // may reverse direction when one animation running
     private float mLatestScaleOpen, mLatestScaleClose = 1;
-    
+
     private boolean b_user_name_empty = true;
     private boolean b_user_pw_empty = true;
 
@@ -94,8 +98,10 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
 
         login_input_user_name_edit_text = $(R.id.login_input_username_edit_text);
         login_input_user_name_icon = $(R.id.login_input_username_icon);
+        login_input_user_name_delete = $(R.id.login_input_username_delete);
         login_input_pw_edit_text = $(R.id.login_input_pw_edit_text);
         login_input_pw_icon = $(R.id.login_input_pw_icon);
+        login_input_pw_delete = $(R.id.login_input_pw_delete);
         login_login_btn = $(R.id.login_login_btn);
         login_animGroup_logo = $(R.id.login_anim_group_1);
         login_animGroup_edit_text = $(R.id.login_anim_group_2);
@@ -111,6 +117,7 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 b_user_name_empty = StringUtils.isEmpty(charSequence);
                 login_login_btn.setEnabled(!b_user_name_empty && !b_user_pw_empty);
+                login_input_user_name_delete.setVisibility(b_user_name_empty ? View.INVISIBLE : View.VISIBLE);
             }
 
             @Override
@@ -118,6 +125,8 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
 
             }
         });
+        login_input_user_name_edit_text.requestFocus();
+
         login_input_pw_edit_text.setOnFocusChangeListener(this);
         login_input_pw_edit_text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -129,6 +138,7 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 b_user_pw_empty = StringUtils.isEmpty(charSequence);
                 login_login_btn.setEnabled(!b_user_name_empty && !b_user_pw_empty);
+                login_input_pw_delete.setVisibility(b_user_pw_empty ? View.INVISIBLE : View.VISIBLE);
             }
 
             @Override
@@ -152,12 +162,18 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
     protected void onPause() {
         super.onPause();
 
+        login_input_user_name_edit_text.clearFocus();
+        login_input_pw_edit_text.clearFocus();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         isKeyboardOpen = false;
         login_animGroup_logo.setScaleX(1);
         login_animGroup_logo.setScaleY(1);
         login_animGroup_edit_text.setTranslationY(0);
-        login_input_user_name_edit_text.clearFocus();
-        login_input_pw_edit_text.clearFocus();
     }
 
     public void startAnim(boolean isOpen) {
