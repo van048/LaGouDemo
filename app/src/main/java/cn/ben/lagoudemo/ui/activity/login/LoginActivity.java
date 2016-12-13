@@ -127,7 +127,6 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
 
             }
         });
-        login_input_user_name_edit_text.requestFocus();
 
         login_input_pw_edit_text.setOnFocusChangeListener(this);
         login_input_pw_edit_text.addTextChangedListener(new TextWatcher() {
@@ -149,7 +148,10 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
         });
         login_input_user_name_icon.setOnClickListener(this);
         login_input_pw_icon.setOnClickListener(this);
+
+        // init state
         login_login_btn.setEnabled(false);
+        login_input_user_name_edit_text.requestFocus();
 
         KeyboardVisibilityEvent.setEventListener(LoginActivity.this, new KeyboardVisibilityEventListener() {
             @Override
@@ -176,6 +178,7 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
 
+        // original state
         isKeyboardOpen = false;
         login_animGroup_logo.setScaleX(1);
         login_animGroup_logo.setScaleY(1);
@@ -225,20 +228,24 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.login_input_username_edit_text:
                 if (hasFocus) {
-                    login_input_user_name_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_media_pause, getTheme()));
+                    updateDrawableOnFocusChanged(login_input_user_name_icon, android.R.drawable.ic_media_pause);
                 } else {
-                    login_input_user_name_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_media_play, getTheme()));
+                    updateDrawableOnFocusChanged(login_input_user_name_icon, android.R.drawable.ic_media_play);
                 }
                 break;
             case R.id.login_input_pw_edit_text:
                 if (hasFocus) {
-                    login_input_pw_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_lock_idle_lock, getTheme()));
+                    updateDrawableOnFocusChanged(login_input_pw_icon, android.R.drawable.ic_lock_idle_lock);
                 } else {
-                    login_input_pw_icon.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_lock_lock, getTheme()));
+                    updateDrawableOnFocusChanged(login_input_pw_icon, android.R.drawable.ic_lock_lock);
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private void updateDrawableOnFocusChanged(ImageView icon, int drawableID) {
+        icon.setImageDrawable(getResources().getDrawable(drawableID, getTheme()));
     }
 }
