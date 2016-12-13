@@ -1,65 +1,73 @@
-package cn.ben.lagoudemo.ui.activity.impl;
+package cn.ben.lagoudemo.ui.activity.login;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+
+import ben.cn.library.activity.BaseEntryActivity;
 import cn.ben.lagoudemo.R;
-import cn.ben.lagoudemo.ui.activity.ILoginView;
-import cn.ben.lagoudemo.ui.presenter.ILoginPresenter;
-import cn.ben.lagoudemo.ui.presenter.impl.LoginPresenterImpl;
 
-public class LoginActivity extends Activity implements ILoginView, View.OnClickListener, View.OnFocusChangeListener {
+public class LoginActivity extends BaseEntryActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private ILoginPresenter loginPresenter;
-    @SuppressWarnings("FieldCanBeLocal")
-    private View login_wander;
     private ImageView login_input_username_icon;
     private EditText login_input_username_edit_text;
     private EditText login_input_pw_edit_text;
     private ImageView login_input_pw_icon;
     private View animGroup1;
     private View animGroup2;
+    private boolean isKeyboardOpen = false;
+    @Override
+    protected int getThemeResourceID() {
+        return R.style.DefaultFullScreenTheme;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    protected int getLayoutResourceID() {
+        return R.layout.activity_login;
+    }
 
-        loginPresenter = new LoginPresenterImpl(this, this);
+    @Override
+    protected void setUpView() {
+        super.setUpView();
 
-        login_wander = findViewById(R.id.login_wander);
-        login_wander.setOnClickListener(this);
-        login_input_username_edit_text = (EditText) findViewById(R.id.login_input_username_edit_text);
-        login_input_username_icon = (ImageView) findViewById(R.id.login_input_username_icon);
-        login_input_pw_edit_text = (EditText) findViewById(R.id.login_input_pw_edit_text);
-        login_input_pw_icon = (ImageView) findViewById(R.id.login_input_pw_icon);
-        animGroup1 = findViewById(R.id.login_anim_group_1);
-        animGroup2 = findViewById(R.id.login_anim_group_2);
+        login_input_username_edit_text = $(R.id.login_input_username_edit_text);
+        login_input_username_icon = $(R.id.login_input_username_icon);
+        login_input_pw_edit_text = $(R.id.login_input_pw_edit_text);
+        login_input_pw_icon = $(R.id.login_input_pw_icon);
+        animGroup1 = $(R.id.login_anim_group_1);
+        animGroup2 = $(R.id.login_anim_group_2);
 
         login_input_username_edit_text.setOnFocusChangeListener(this);
         login_input_pw_edit_text.setOnFocusChangeListener(this);
         login_input_username_icon.setOnClickListener(this);
         login_input_pw_icon.setOnClickListener(this);
+
+        KeyboardVisibilityEvent.setEventListener(LoginActivity.this, new KeyboardVisibilityEventListener() {
+            @Override
+            public void onVisibilityChanged(boolean isOpen) {
+                startAnim(isOpen);
+            }
+        });
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onPause() {
+        super.onPause();
         login_input_username_edit_text.clearFocus();
         login_input_pw_edit_text.clearFocus();
     }
 
     public void startAnim(boolean isOpen) {
+        if (isOpen == isKeyboardOpen) return;
+        isKeyboardOpen = isOpen;
+
         Animation scaleDown = AnimationUtils.loadAnimation(this, R.anim.login_scale_down_anim);
         Animation moveUp = AnimationUtils.loadAnimation(this, R.anim.login_move_up_anim);
         Animation scaleUp = AnimationUtils.loadAnimation(this, R.anim.login_scale_up_anim);
@@ -89,7 +97,7 @@ public class LoginActivity extends Activity implements ILoginView, View.OnClickL
             anim2.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    animGroup2.setTranslationY(-120);
+                    animGroup2.setTranslationY(-120f);
                 }
 
                 @Override
@@ -107,12 +115,12 @@ public class LoginActivity extends Activity implements ILoginView, View.OnClickL
             anim1.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    animGroup1.setScaleX(1f);
-                    animGroup1.setScaleY(1f);
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
+                    animGroup1.setScaleX(1f);
+                    animGroup1.setScaleY(1f);
                 }
 
                 @Override
@@ -128,6 +136,7 @@ public class LoginActivity extends Activity implements ILoginView, View.OnClickL
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
+
                 }
 
                 @Override
@@ -144,9 +153,6 @@ public class LoginActivity extends Activity implements ILoginView, View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login_wander:
-                moveToMainPage();
-                break;
             case R.id.login_input_username_icon:
                 clickOnIconBeforeEditText(login_input_username_edit_text);
                 break;
@@ -170,11 +176,6 @@ public class LoginActivity extends Activity implements ILoginView, View.OnClickL
         inputMethodManager.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
     }
 
-    private void moveToMainPage() {
-        //// TODO: 2016/5/25
-        System.out.println("moveToMainPage");
-    }
-
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
@@ -194,29 +195,6 @@ public class LoginActivity extends Activity implements ILoginView, View.OnClickL
                 break;
             default:
                 break;
-        }
-    }
-
-    private int backPressedCount = 0;
-    @SuppressWarnings("FieldCanBeLocal")
-    private final int BACK_PRESSED_CHECK_TIME = 2000;
-    private final Handler BACK_PRESSED_CHECK_HANDLER = new Handler();
-    private boolean backPressedCheckEnabled = true;
-
-    @Override
-    public void onBackPressed() {
-        if (backPressedCheckEnabled && backPressedCount == 0) {
-            backPressedCount++;
-            Toast.makeText(LoginActivity.this, R.string.toast_back_pressed, Toast.LENGTH_SHORT).show();
-            BACK_PRESSED_CHECK_HANDLER.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    backPressedCount = 0;
-                }
-            }, BACK_PRESSED_CHECK_TIME);
-        } else {
-            backPressedCheckEnabled = false;
-            super.onBackPressed();
         }
     }
 }

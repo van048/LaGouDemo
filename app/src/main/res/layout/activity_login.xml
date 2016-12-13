@@ -26,30 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:id="@+id/login_wander"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true">
-
-                <TextView
-                    android:id="@+id/login_wander_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login_wander" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/login_wander_text"
-                    android:src="@android:drawable/arrow_down_float" />
-            </RelativeLayout>
-
             <ImageView
                 android:id="@+id/login_logo"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_below="@id/login_wander"
                 android:layout_centerHorizontal="true"
                 android:src="@android:drawable/ic_delete" />
         </RelativeLayout>
