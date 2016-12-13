@@ -185,7 +185,7 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
         login_animGroup_edit_text.setTranslationY(0);
     }
 
-    public void startAnim(boolean isOpen) {
+    private void startAnim(boolean isOpen) {
         //  animate once
         if (isOpen == isKeyboardOpen) return;
 
@@ -247,5 +247,10 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
 
     private void updateDrawableOnFocusChanged(ImageView icon, int drawableID) {
         icon.setImageDrawable(getResources().getDrawable(drawableID, getTheme()));
+    }
+
+    @Override
+    protected int getExitHintResourceID() {
+        return R.string.toast_back_pressed;
     }
 }
