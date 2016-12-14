@@ -18,11 +18,9 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventList
 
 import ben.cn.library.activity.BaseEntryActivity;
 import cn.ben.lagoudemo.R;
+import cn.ben.lagoudemo.ui.constant.Constants;
 
 public class LoginActivity extends BaseEntryActivity implements View.OnClickListener, View.OnFocusChangeListener {
-
-    private static final float EDIT_TEXT_ANIM_FINAL_Y = -120;
-    private static final long ANIM_DURATION = 300;
 
     private ImageView login_input_user_name_icon;
     private EditText login_input_user_name_edit_text;
@@ -37,8 +35,7 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
     // animation
     private boolean isKeyboardOpen = false; // latest param of startAnim
     private ValueAnimator mValueAnimatorKeyboardOpen, mValueAnimatorKeyboardClose;
-    // may reverse direction when one animation running
-    private float mLatestScaleOpen, mLatestScaleClose = 1;
+    private float mLatestScaleOpen, mLatestScaleClose = 1; // start from latest scale
 
     private boolean b_user_name_empty = true;
     private boolean b_user_pw_empty = true;
@@ -75,14 +72,14 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
             }
         });
 
-        mValueAnimatorKeyboardOpen.setDuration(ANIM_DURATION);
-        mValueAnimatorKeyboardClose.setDuration(ANIM_DURATION);
+        mValueAnimatorKeyboardOpen.setDuration(Constants.Login.KEYBOARD_ANIM_DURATION);
+        mValueAnimatorKeyboardClose.setDuration(Constants.Login.KEYBOARD_ANIM_DURATION);
     }
 
     private void updateAnimGroupPos(float logoScale) {
         login_animGroup_logo.setScaleX(logoScale);
         login_animGroup_logo.setScaleY(logoScale);
-        login_animGroup_edit_text.setTranslationY(EDIT_TEXT_ANIM_FINAL_Y * (1 - logoScale));
+        login_animGroup_edit_text.setTranslationY(Constants.Login.KEYBOARD_ANIM_EDIT_TEXT_FINAL_Y * (1 - logoScale));
     }
 
     @Override
