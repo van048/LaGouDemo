@@ -18,7 +18,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventList
 
 import ben.cn.library.activity.BaseEntryActivity;
 import cn.ben.lagoudemo.R;
-import cn.ben.lagoudemo.ui.constant.Constants;
+import cn.ben.lagoudemo.constant.Constants;
 
 public class LoginActivity extends BaseEntryActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
@@ -32,11 +32,12 @@ public class LoginActivity extends BaseEntryActivity implements View.OnClickList
     private View login_animGroup_edit_text;
     private Button login_login_btn;
 
-    // animation
+    // animation related
     private boolean isKeyboardOpen = false; // latest param of startAnim
     private ValueAnimator mValueAnimatorKeyboardOpen, mValueAnimatorKeyboardClose;
     private float mLatestScaleOpen, mLatestScaleClose = 1; // start from latest scale
 
+    // edit text state
     private boolean b_user_name_empty = true;
     private boolean b_user_pw_empty = true;
 

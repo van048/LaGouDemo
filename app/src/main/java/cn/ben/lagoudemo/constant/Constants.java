@@ -1,4 +1,4 @@
-package cn.ben.lagoudemo.ui.constant;
+package cn.ben.lagoudemo.constant;
 
 public class Constants {
     public class Login {
