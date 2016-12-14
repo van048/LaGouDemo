@@ -2,8 +2,6 @@ package cn.ben.lagoudemo.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +14,12 @@ import com.blankj.utilcode.utils.StringUtils;
 
 import ben.cn.library.ui.fragment.BaseFragment;
 import cn.ben.lagoudemo.R;
+import cn.ben.lagoudemo.ui.adapter.TextWatcherAdapter;
 import cn.ben.lagoudemo.ui.contract.login.LoginContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginLoginFragment extends BaseFragment implements LoginContract.View, View.OnClickListener, View.OnFocusChangeListener{
+public class LoginLoginFragment extends BaseFragment implements LoginContract.View, View.OnClickListener, View.OnFocusChangeListener {
 
     private LoginContract.Presenter mPresenter;
 
@@ -66,40 +65,20 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
         login_login_btn = $(R.id.login_login_btn);
 
         login_input_user_name_edit_text.setOnFocusChangeListener(this);
-        login_input_user_name_edit_text.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
+        login_input_user_name_edit_text.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 b_user_name_empty = StringUtils.isEmpty(charSequence);
                 updateOnTextChanged(login_input_user_name_delete, b_user_name_empty);
             }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
         });
 
         login_input_pw_edit_text.setOnFocusChangeListener(this);
-        login_input_pw_edit_text.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
+        login_input_pw_edit_text.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 b_user_pw_empty = StringUtils.isEmpty(charSequence);
                 updateOnTextChanged(login_input_pw_delete, b_user_pw_empty);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
             }
         });
         login_input_user_name_icon.setOnClickListener(this);
