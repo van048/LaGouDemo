@@ -3,7 +3,7 @@ package cn.ben.lagoudemo.ui.activity.splash;
 import cn.ben.lagoudemo.R;
 import cn.ben.lagoudemo.ui.activity.login.LoginActivity;
 
-public class SplashActivity extends ben.cn.library.activity.BaseSplashActivity {
+public class SplashActivity extends ben.cn.library.ui.activity.BaseSplashActivity {
 
     @Override
     protected int getThemeResourceID() {
