@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="login_reg_btn_pressed">#e77474</color>
+    <color name="login_reg_btn_default">#ea9191</color>
+    <color name="login_login_btn_pressed">#9dda32</color>
+    <color name="login_login_btn_default">#1fcf94</color>
 </resources>
