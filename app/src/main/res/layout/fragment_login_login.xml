@@ -118,17 +118,17 @@
             android:id="@+id/login_login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/selector_login_login_btn"
             android:text="@string/login_login"
-            android:textColor="@color/selector_text"
-            android:background="@drawable/selector_login_login_btn"/>
+            android:textColor="@color/selector_text"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/login_reg_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:layout_below="@id/login_login_btn_frame">
+        android:layout_below="@id/login_login_btn_frame"
+        android:paddingTop="10dp">
 
         <Button
             android:layout_width="match_parent"

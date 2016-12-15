@@ -14,6 +14,7 @@ import com.blankj.utilcode.utils.StringUtils;
 
 import ben.cn.library.ui.fragment.BaseFragment;
 import cn.ben.lagoudemo.R;
+import cn.ben.lagoudemo.constant.Constants;
 import cn.ben.lagoudemo.ui.adapter.TextWatcherAdapter;
 import cn.ben.lagoudemo.ui.contract.LoginContract;
 
@@ -81,8 +82,11 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
                 updateOnTextChanged(login_input_pw_delete, b_user_pw_empty);
             }
         });
+
         login_input_user_name_icon.setOnClickListener(this);
         login_input_pw_icon.setOnClickListener(this);
+        login_input_user_name_delete.setOnClickListener(this);
+        login_input_pw_delete.setOnClickListener(this);
 
         // init state
         login_login_btn.setEnabled(false);
@@ -111,6 +115,12 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
             case R.id.login_input_pw_icon:
                 clickOnIconBeforeEditText(login_input_pw_edit_text);
                 break;
+            case R.id.login_input_username_delete:
+                login_input_user_name_edit_text.setText(Constants.EMPTY_STRING);
+                break;
+            case R.id.login_input_pw_delete:
+                login_input_pw_edit_text.setText(Constants.EMPTY_STRING);
+                break;
             default:
                 break;
         }
@@ -127,15 +137,19 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
         switch (v.getId()) {
             case R.id.login_input_username_edit_text:
                 if (hasFocus) {
+                    updateOnTextChanged(login_input_user_name_delete, b_user_name_empty);
                     updateDrawableOnFocusChanged(login_input_user_name_icon, android.R.drawable.ic_media_pause);
                 } else {
+                    login_input_user_name_delete.setVisibility(View.INVISIBLE);
                     updateDrawableOnFocusChanged(login_input_user_name_icon, android.R.drawable.ic_media_play);
                 }
                 break;
             case R.id.login_input_pw_edit_text:
                 if (hasFocus) {
+                    updateOnTextChanged(login_input_pw_delete, b_user_pw_empty);
                     updateDrawableOnFocusChanged(login_input_pw_icon, android.R.drawable.ic_lock_idle_lock);
                 } else {
+                    login_input_pw_delete.setVisibility(View.INVISIBLE);
                     updateDrawableOnFocusChanged(login_input_pw_icon, android.R.drawable.ic_lock_lock);
                 }
                 break;
