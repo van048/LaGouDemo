@@ -137,6 +137,7 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
         switch (v.getId()) {
             case R.id.login_input_username_edit_text:
                 if (hasFocus) {
+                    ((EditText)v).setSelection(0);
                     updateOnTextChanged(login_input_user_name_delete, b_user_name_empty);
                     updateDrawableOnFocusChanged(login_input_user_name_icon, android.R.drawable.ic_media_pause);
                 } else {
@@ -146,6 +147,7 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
                 break;
             case R.id.login_input_pw_edit_text:
                 if (hasFocus) {
+                    ((EditText)v).setSelection(0);
                     updateOnTextChanged(login_input_pw_delete, b_user_pw_empty);
                     updateDrawableOnFocusChanged(login_input_pw_icon, android.R.drawable.ic_lock_idle_lock);
                 } else {
