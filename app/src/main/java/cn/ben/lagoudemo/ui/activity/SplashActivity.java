@@ -1,7 +1,6 @@
-package cn.ben.lagoudemo.ui.activity.splash;
+package cn.ben.lagoudemo.ui.activity;
 
 import cn.ben.lagoudemo.R;
-import cn.ben.lagoudemo.ui.activity.login.LoginActivity;
 
 public class SplashActivity extends ben.cn.library.ui.activity.BaseSplashActivity {
 

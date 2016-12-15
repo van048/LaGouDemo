@@ -15,7 +15,7 @@ import com.blankj.utilcode.utils.StringUtils;
 import ben.cn.library.ui.fragment.BaseFragment;
 import cn.ben.lagoudemo.R;
 import cn.ben.lagoudemo.ui.adapter.TextWatcherAdapter;
-import cn.ben.lagoudemo.ui.contract.login.LoginContract;
+import cn.ben.lagoudemo.ui.contract.LoginContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

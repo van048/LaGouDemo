@@ -1,4 +1,4 @@
-package cn.ben.lagoudemo.ui.activity.login;
+package cn.ben.lagoudemo.ui.activity;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;

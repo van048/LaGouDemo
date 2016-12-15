@@ -1,4 +1,4 @@
-package cn.ben.lagoudemo.ui.contract.login;
+package cn.ben.lagoudemo.ui.contract;
 
 import ben.cn.library.ui.activity.BaseView;
 import ben.cn.library.ui.presenter.BasePresenter;
