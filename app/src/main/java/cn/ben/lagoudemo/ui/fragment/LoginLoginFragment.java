@@ -2,6 +2,7 @@ package cn.ben.lagoudemo.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import cn.ben.lagoudemo.ui.contract.LoginContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginLoginFragment extends BaseFragment implements LoginContract.View, View.OnClickListener, View.OnFocusChangeListener {
+public class LoginLoginFragment extends BaseFragment implements LoginContract.View, View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
     private LoginContract.Presenter mPresenter;
 
@@ -73,6 +74,7 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
                 updateOnTextChanged(login_input_user_name_delete, b_user_name_empty);
             }
         });
+        login_input_user_name_edit_text.setOnKeyListener(this);
 
         login_input_pw_edit_text.setOnFocusChangeListener(this);
         login_input_pw_edit_text.addTextChangedListener(new TextWatcherAdapter() {
@@ -82,6 +84,7 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
                 updateOnTextChanged(login_input_pw_delete, b_user_pw_empty);
             }
         });
+        login_input_pw_edit_text.setOnKeyListener(this);
 
         login_input_user_name_icon.setOnClickListener(this);
         login_input_pw_icon.setOnClickListener(this);
@@ -167,5 +170,18 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
     @Override
     public void setPresenter(LoginContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (v == login_input_user_name_edit_text && keyCode == KeyEvent.KEYCODE_ENTER) {
+            v.clearFocus();
+            return true;
+        }
+        if (v == login_input_pw_edit_text && keyCode == KeyEvent.KEYCODE_ENTER) {
+            v.clearFocus();
+            return true;
+        }
+        return false;
     }
 }
