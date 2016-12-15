@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import com.blankj.utilcode.utils.KeyboardUtils;
 import com.blankj.utilcode.utils.StringUtils;
 
+import ben.cn.library.constants.Constants;
 import ben.cn.library.ui.fragment.BaseFragment;
 import cn.ben.lagoudemo.R;
-import cn.ben.lagoudemo.constant.Constants;
 import cn.ben.lagoudemo.ui.adapter.TextWatcherAdapter;
 import cn.ben.lagoudemo.ui.contract.LoginContract;
 

@@ -1,7 +1,6 @@
 package cn.ben.lagoudemo.constant;
 
 public class Constants {
-    public static final String EMPTY_STRING = "";
 
     public class Login {
         public static final float KEYBOARD_ANIM_EDIT_TEXT_FINAL_Y = -120;
