@@ -16,11 +16,13 @@
 
 package cn.ben.lagoudemo.data;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
+import cn.ben.lagoudemo.constant.Constants;
 import cn.ben.lagoudemo.data.source.LoginDataSource;
 
 /**
@@ -30,7 +32,7 @@ public class FakeLoginRemoteDataSource implements LoginDataSource {
 
     private static FakeLoginRemoteDataSource INSTANCE;
 
-    private static final Map<String, UserAuthInfo> USER_AUTH_SERVICE_DATA = new LinkedHashMap<>();
+    private static final Map<String, UserAuthInfo> USER_AUTH_SERVICE_DATA = new HashMap<>();
 
     // Prevent direct instantiation.
     private FakeLoginRemoteDataSource() {
@@ -47,12 +49,17 @@ public class FakeLoginRemoteDataSource implements LoginDataSource {
     @VisibleForTesting
     public void addMultipleUserAuthInfo(UserAuthInfo... multipleUserAuthInfo) {
         for (UserAuthInfo userAuthInfo : multipleUserAuthInfo) {
-            USER_AUTH_SERVICE_DATA.put(userAuthInfo.getId(), userAuthInfo);
+            USER_AUTH_SERVICE_DATA.put(userAuthInfo.getName(), userAuthInfo);
         }
     }
 
     @Override
-    public void verifyUser(UserAuthInfo userAuthInfo) {
-        // TODO: 2016/12/16
+    public void verifyUser(@NonNull UserAuthInfo userAuthInfo, @NonNull VerifyUserCallback callback) {
+        UserAuthInfo tmpUserAuthInfo = USER_AUTH_SERVICE_DATA.get(userAuthInfo.getName());
+        if (tmpUserAuthInfo.equals(userAuthInfo)) {
+            callback.onVerifiedSuccess();
+            return;
+        }
+        callback.onVerifiedFailed(Constants.ErrorMessage.USER_NOT_FOUND.getMessage());
     }
 }

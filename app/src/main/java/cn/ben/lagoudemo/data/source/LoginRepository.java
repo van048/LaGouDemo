@@ -50,7 +50,7 @@ public class LoginRepository implements LoginDataSource {
     }
 
     @Override
-    public void verifyUser(UserAuthInfo userAuthInfo) {
-        // TODO: 2016/12/16
+    public void verifyUser(@NonNull UserAuthInfo userAuthInfo, @NonNull VerifyUserCallback callback) {
+        // TODO: 2016/12/16  
     }
 }

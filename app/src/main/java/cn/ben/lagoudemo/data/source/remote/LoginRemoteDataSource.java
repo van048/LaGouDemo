@@ -16,7 +16,9 @@
 
 package cn.ben.lagoudemo.data.source.remote;
 
-import java.util.LinkedHashMap;
+import android.support.annotation.NonNull;
+
+import java.util.HashMap;
 import java.util.Map;
 
 import cn.ben.lagoudemo.data.UserAuthInfo;
@@ -34,7 +36,7 @@ public class LoginRemoteDataSource implements LoginDataSource {
     private final static Map<String, UserAuthInfo> USER_AUTH_SERVICE_DATA;
 
     static {
-        USER_AUTH_SERVICE_DATA = new LinkedHashMap<>(2);
+        USER_AUTH_SERVICE_DATA = new HashMap<>(2);
         addUserAuthInfo("van048", "28853048");
         addUserAuthInfo("van04825", "yyb28853048");
     }
@@ -52,11 +54,11 @@ public class LoginRemoteDataSource implements LoginDataSource {
 
     private static void addUserAuthInfo(String name, String password) {
         UserAuthInfo newUserAuthInfo = new UserAuthInfo(name, password);
-        USER_AUTH_SERVICE_DATA.put(newUserAuthInfo.getId(), newUserAuthInfo);
+        USER_AUTH_SERVICE_DATA.put(name, newUserAuthInfo);
     }
 
     @Override
-    public void verifyUser(UserAuthInfo userAuthInfo) {
+    public void verifyUser(@NonNull UserAuthInfo userAuthInfo, @NonNull VerifyUserCallback callback) {
         // TODO: 2016/12/16
     }
 }

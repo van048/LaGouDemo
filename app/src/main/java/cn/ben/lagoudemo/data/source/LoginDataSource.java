@@ -16,16 +16,17 @@
 
 package cn.ben.lagoudemo.data.source;
 
+import android.support.annotation.NonNull;
+
 import cn.ben.lagoudemo.data.UserAuthInfo;
 
-// TODO: 2016/12/16
 public interface LoginDataSource {
 
     interface VerifyUserCallback {
         void onVerifiedSuccess();
 
-        void onVerifiedFailed();
+        void onVerifiedFailed(@NonNull String errorMessage);
     }
 
-    void verifyUser(UserAuthInfo userAuthInfo);
+    void verifyUser(@NonNull UserAuthInfo userAuthInfo, @NonNull final VerifyUserCallback callback);
 }

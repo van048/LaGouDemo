@@ -15,6 +15,7 @@ import com.blankj.utilcode.utils.StringUtils;
 
 import ben.cn.library.constants.Constants;
 import ben.cn.library.ui.fragment.BaseFragment;
+import ben.cn.library.utils.MyToastUtils;
 import cn.ben.lagoudemo.R;
 import cn.ben.lagoudemo.ui.adapter.TextWatcherAdapter;
 import cn.ben.lagoudemo.ui.contract.LoginContract;
@@ -90,6 +91,7 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
         login_input_pw_icon.setOnClickListener(this);
         login_input_user_name_delete.setOnClickListener(this);
         login_input_pw_delete.setOnClickListener(this);
+        login_login_btn.setOnClickListener(this);
 
         // init state
         login_login_btn.setEnabled(false);
@@ -123,6 +125,10 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
                 break;
             case R.id.login_input_pw_delete:
                 login_input_pw_edit_text.setText(Constants.EMPTY_STRING);
+                break;
+            case R.id.login_login_btn:
+                KeyboardUtils.hideSoftInput(getActivity());
+                mPresenter.verifyUser(login_input_user_name_edit_text.getText().toString(), login_input_pw_edit_text.getText().toString());
                 break;
             default:
                 break;
@@ -188,6 +194,17 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    @Override
+    public void moveToMainPage() {
+        // TODO: 2016/12/16
+        MyToastUtils.showLongToastSafe(getContext(), "moveToMainPage", true);
+    }
+
+    @Override
+    public void showVerifyErrorMessage(String errorMessage) {
+        MyToastUtils.showShortToastSafe(getContext(), errorMessage, true);
     }
 
     @Override
