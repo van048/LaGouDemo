@@ -9,11 +9,14 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventList
 
 import ben.cn.library.ui.activity.BaseActivity;
 import ben.cn.library.utils.MyActivityUtils;
+import cn.ben.lagoudemo.Injection;
 import cn.ben.lagoudemo.R;
 import cn.ben.lagoudemo.constant.Constants;
 import cn.ben.lagoudemo.ui.fragment.LoginLoginFragment;
+import cn.ben.lagoudemo.ui.presenter.LoginPresenter;
 
 public class LoginActivity extends BaseActivity {
+    private LoginPresenter mLoginPresenter;
 
     private View login_animGroup_logo;
     private View login_animGroup_edit_text;
@@ -87,6 +90,9 @@ public class LoginActivity extends BaseActivity {
             loginLoginFragment = LoginLoginFragment.newInstance();
             MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), loginLoginFragment, R.id.login_anim_group_2);
         }
+
+        mLoginPresenter = new LoginPresenter(
+                Injection.provideLoginRepository(getApplicationContext()), loginLoginFragment);
 
         KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
             @Override
