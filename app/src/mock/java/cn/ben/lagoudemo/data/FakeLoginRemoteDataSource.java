@@ -45,7 +45,7 @@ public class FakeLoginRemoteDataSource implements LoginDataSource {
         return INSTANCE;
     }
 
-    // TODO: 2016/12/16  
+    // TODO: 2016/12/16 use in tests
     @VisibleForTesting
     public void addMultipleUserAuthInfo(UserAuthInfo... multipleUserAuthInfo) {
         for (UserAuthInfo userAuthInfo : multipleUserAuthInfo) {
@@ -56,7 +56,7 @@ public class FakeLoginRemoteDataSource implements LoginDataSource {
     @Override
     public void verifyUser(@NonNull UserAuthInfo userAuthInfo, @NonNull VerifyUserCallback callback) {
         UserAuthInfo tmpUserAuthInfo = USER_AUTH_SERVICE_DATA.get(userAuthInfo.getName());
-        if (tmpUserAuthInfo.equals(userAuthInfo)) {
+        if (userAuthInfo.equals(tmpUserAuthInfo)) {
             callback.onVerifiedSuccess();
             return;
         }

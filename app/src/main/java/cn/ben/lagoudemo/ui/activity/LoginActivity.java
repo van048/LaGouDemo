@@ -133,6 +133,7 @@ public class LoginActivity extends BaseActivity {
         return R.string.toast_back_pressed;
     }
 
+    // see http://www.jianshu.com/p/9bda5f58daf1
     @VisibleForTesting
     public IdlingResource getCountingIdlingResource() {
         return EspressoIdlingResource.getIdlingResource();

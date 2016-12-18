@@ -23,7 +23,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class LoginDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
 
-    // TODO: 2016/12/16
     public static final String DATABASE_NAME = "Users.db";
 
     private static final String TEXT_TYPE = " TEXT";
@@ -32,13 +31,13 @@ public class LoginDbHelper extends SQLiteOpenHelper {
 
     private static final String COMMA_SEP = ",";
 
-    // TODO: 2016/12/16  
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + LoginPersistenceContract.UserAuthInfoEntry.TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + LoginPersistenceContract.UserAuthInfoEntry.TABLE_NAME + " (" +
                     LoginPersistenceContract.UserAuthInfoEntry._ID + TEXT_TYPE + " PRIMARY KEY," +
                     LoginPersistenceContract.UserAuthInfoEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
                     LoginPersistenceContract.UserAuthInfoEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
                     LoginPersistenceContract.UserAuthInfoEntry.COLUMN_NAME_PASSWORD + TEXT_TYPE + COMMA_SEP +
+                    LoginPersistenceContract.UserAuthInfoEntry.COLUMN_NAME_VALID + BOOLEAN_TYPE + COMMA_SEP +
                     " )";
 
     public LoginDbHelper(Context context) {

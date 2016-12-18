@@ -45,8 +45,7 @@ import static org.hamcrest.Matchers.not;
 @LargeTest
 public class LoginScreenTest {
 
-    // TODO: 2016/12/16
-    // second param
+    // TODO: 2016/12/16 second param
     @Rule
     public ActivityTestRule<LoginActivity> mLoginActivityTestRule =
             new ActivityTestRule<>(LoginActivity.class, true, false);

@@ -27,9 +27,10 @@ public final class LoginPersistenceContract {
 
     /* Inner class that defines the table contents */
     public static abstract class UserAuthInfoEntry implements BaseColumns {
-        public static final String TABLE_NAME = "user";
+        public static final String TABLE_NAME = "users";
         public static final String COLUMN_NAME_ENTRY_ID = "entry_id";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_PASSWORD = "password";
+        public static final String COLUMN_NAME_VALID = "valid";
     }
 }

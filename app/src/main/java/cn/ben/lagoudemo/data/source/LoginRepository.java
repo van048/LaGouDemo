@@ -51,6 +51,9 @@ public class LoginRepository implements LoginDataSource {
 
     @Override
     public void verifyUser(@NonNull UserAuthInfo userAuthInfo, @NonNull VerifyUserCallback callback) {
-        // TODO: 2016/12/16  
+        // TODO: 2016/12/18 do not use local when released
+        // mLoginRemoteDataSource.verifyUser(userAuthInfo, callback);
+
+        mLoginLocalDataSource.verifyUser(userAuthInfo, callback);
     }
 }

@@ -19,7 +19,6 @@ package cn.ben.lagoudemo.data;
 import android.support.annotation.NonNull;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Strings;
 
 public final class UserAuthInfo {
 
@@ -29,9 +28,16 @@ public final class UserAuthInfo {
     @NonNull
     private final String mPassword;
 
+    private final boolean mValid;
+
     public UserAuthInfo(@NonNull String name, @NonNull String password) {
+        this(name, password, true);
+    }
+
+    public UserAuthInfo(@NonNull String name, @NonNull String password, boolean valid) {
         mName = name;
         mPassword = password;
+        mValid = valid;
     }
 
     @NonNull
@@ -44,9 +50,8 @@ public final class UserAuthInfo {
         return mPassword;
     }
 
-    public boolean isEmpty() {
-        return Strings.isNullOrEmpty(mName) &&
-                Strings.isNullOrEmpty(mPassword);
+    public boolean isValid() {
+        return mValid;
     }
 
     @Override
@@ -55,11 +60,18 @@ public final class UserAuthInfo {
         if (o == null || getClass() != o.getClass()) return false;
         UserAuthInfo userAuthInfo = (UserAuthInfo) o;
         return Objects.equal(mName, userAuthInfo.mName) &&
-                Objects.equal(mPassword, userAuthInfo.mPassword);
+                Objects.equal(mPassword, userAuthInfo.mPassword) &&
+                Objects.equal(mValid, userAuthInfo.mValid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(mName, mPassword);
+        return Objects.hashCode(mName, mPassword, mValid);
+    }
+
+    public boolean matchesAllProperties(String name, String password, boolean valid) {
+        return Objects.equal(mName, name) &&
+                Objects.equal(mPassword, password) &&
+                Objects.equal(mValid, valid);
     }
 }
