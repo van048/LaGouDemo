@@ -36,16 +36,32 @@ public class LoginPresenter implements LoginContract.Presenter {
             return;
         }
 
+        // The network request might be handled in a different thread so make sure Espresso knows
+        // that the app is busy until the response is handled.
+        EspressoIdlingResource.increment(); // App is busy until further notice
+
         UserAuthInfo userAuthInfo = new UserAuthInfo(name, password);
         mLoginRepository.verifyUser(userAuthInfo, new LoginDataSource.VerifyUserCallback() {
 
             @Override
             public void onVerifiedSuccess() {
+                // This callback may be called twice, once for the cache and once for loading
+                // the data from the server API, so we check before decrementing, otherwise
+                // it throws "Counter has been corrupted!" exception.
+                if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
+                    EspressoIdlingResource.decrement(); // Set app as idle.
+                }
                 mLoginView.moveToMainPage();
             }
 
             @Override
             public void onVerifiedFailed(String errorMessage) {
+                // This callback may be called twice, once for the cache and once for loading
+                // the data from the server API, so we check before decrementing, otherwise
+                // it throws "Counter has been corrupted!" exception.
+                if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
+                    EspressoIdlingResource.decrement(); // Set app as idle.
+                }
                 mLoginView.showVerifyErrorMessage(errorMessage);
             }
         });

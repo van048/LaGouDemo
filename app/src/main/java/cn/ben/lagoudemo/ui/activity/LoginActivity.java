@@ -2,6 +2,8 @@ package cn.ben.lagoudemo.ui.activity;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.view.View;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -128,5 +130,10 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected int getExitHintResourceID() {
         return R.string.toast_back_pressed;
+    }
+
+    @VisibleForTesting
+    public IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
     }
 }
