@@ -12,7 +12,14 @@ public interface LoginContract {
         void showVerifyErrorMessage(String errorMessage);
     }
 
-    interface LoginPresenter extends BasePresenter{
+    interface LoginPresenter extends BasePresenter {
         void verifyUser(String name, String password);
+    }
+
+    interface RegView extends BaseView<RegPresenter> {
+        boolean isActive();
+    }
+
+    interface RegPresenter extends BasePresenter {
     }
 }

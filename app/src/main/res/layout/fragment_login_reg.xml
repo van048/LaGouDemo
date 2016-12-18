@@ -124,14 +124,13 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/login_reg_btn_frame"
+        android:id="@+id/login_reg_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/login_login_btn_frame"
         android:paddingTop="10dp">
 
         <Button
-            android:id="@+id/login_reg_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_login_reg_btn"

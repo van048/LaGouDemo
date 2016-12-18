@@ -1,5 +1,6 @@
 package cn.ben.lagoudemo.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -33,10 +34,13 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Lo
     private EditText login_input_pw_edit_text;
     private ImageView login_input_pw_delete;
     private Button login_login_btn;
+    private Button login_reg_btn;
 
     // edit text state
     private boolean b_user_name_empty = true;
     private boolean b_user_pw_empty = true;
+
+    private OnRegBtnClickedListener mOnRegBtnClickedListener;
 
     public static LoginLoginFragment newInstance() {
         return new LoginLoginFragment();
@@ -66,6 +70,7 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Lo
         login_input_pw_icon = $(R.id.login_input_pw_icon);
         login_input_pw_delete = $(R.id.login_input_pw_delete);
         login_login_btn = $(R.id.login_login_btn);
+        login_reg_btn = $(R.id.login_reg_btn);
 
         login_input_user_name_edit_text.setOnFocusChangeListener(this);
         login_input_user_name_edit_text.addTextChangedListener(new TextWatcherAdapter() {
@@ -92,6 +97,7 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Lo
         login_input_user_name_delete.setOnClickListener(this);
         login_input_pw_delete.setOnClickListener(this);
         login_login_btn.setOnClickListener(this);
+        login_reg_btn.setOnClickListener(this);
     }
 
     private void updateOnTextChanged(View deleteView, boolean isEmpty) {
@@ -134,6 +140,9 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Lo
             case R.id.login_login_btn:
                 KeyboardUtils.hideSoftInput(getActivity());
                 mPresenter.verifyUser(login_input_user_name_edit_text.getText().toString(), login_input_pw_edit_text.getText().toString());
+                break;
+            case R.id.login_reg_btn:
+                mOnRegBtnClickedListener.switchToRegFragment();
                 break;
             default:
                 break;
@@ -216,5 +225,26 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Lo
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnRegBtnClickedListener = (OnRegBtnClickedListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement OnRegBtnClickedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mOnRegBtnClickedListener = null;
+    }
+
+    public interface OnRegBtnClickedListener {
+        void switchToRegFragment();
     }
 }

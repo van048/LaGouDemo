@@ -16,10 +16,13 @@ import cn.ben.lagoudemo.Injection;
 import cn.ben.lagoudemo.R;
 import cn.ben.lagoudemo.constant.Constants;
 import cn.ben.lagoudemo.ui.fragment.LoginLoginFragment;
+import cn.ben.lagoudemo.ui.fragment.LoginRegFragment;
 import cn.ben.lagoudemo.ui.presenter.LoginLoginPresenter;
+import cn.ben.lagoudemo.ui.presenter.LoginRegPresenter;
 
-public class LoginRegActivity extends BaseActivity {
+public class LoginRegActivity extends BaseActivity implements LoginLoginFragment.OnRegBtnClickedListener {
     private LoginLoginPresenter mLoginLoginPresenter;
+    private LoginRegPresenter mLoginRegPresenter;
 
     private View login_animGroup_logo;
     private View login_animGroup_edit_text;
@@ -28,6 +31,9 @@ public class LoginRegActivity extends BaseActivity {
     private ValueAnimator mValueAnimatorKeyboardOpen, mValueAnimatorKeyboardClose;
     private boolean isKeyboardOpening = false; // latest param of startAnim
     private float mLatestScaleOpen = 0, mLatestScaleClose = 1; // start from latest scale
+
+    private LoginLoginFragment mLoginLoginFragment;
+    private LoginRegFragment mLoginRegFragment;
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -82,20 +88,28 @@ public class LoginRegActivity extends BaseActivity {
     }
 
     @Override
-    protected void setUpView() {
-        super.setUpView();
+    protected void setUpView(Bundle savedInstanceState) {
+        super.setUpView(savedInstanceState);
 
         login_animGroup_logo = $(R.id.login_anim_group_1);
         login_animGroup_edit_text = $(R.id.login_anim_group_2);
 
-        LoginLoginFragment loginLoginFragment = (LoginLoginFragment) getSupportFragmentManager().findFragmentById(R.id.login_anim_group_2);
-        if (loginLoginFragment == null) {
-            loginLoginFragment = LoginLoginFragment.newInstance();
-            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), loginLoginFragment, R.id.login_anim_group_2);
+        if (mLoginLoginFragment == null) {
+            mLoginLoginFragment = LoginLoginFragment.newInstance();
+            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginLoginFragment, R.id.login_anim_group_2);
         }
+        if (mLoginRegFragment == null) {
+            mLoginRegFragment = LoginRegFragment.newInstance();
+            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginRegFragment, R.id.login_anim_group_2);
+        }
+        getSupportFragmentManager().beginTransaction().
+                show(mLoginLoginFragment).
+                hide(mLoginRegFragment).commit();
 
         mLoginLoginPresenter = new LoginLoginPresenter(
-                Injection.provideLoginRepository(getApplicationContext()), loginLoginFragment);
+                Injection.provideLoginRepository(getApplicationContext()), mLoginLoginFragment);
+        mLoginRegPresenter = new LoginRegPresenter(
+                Injection.provideLoginRepository(getApplicationContext()), mLoginRegFragment);
 
         KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
             @Override
@@ -137,5 +151,16 @@ public class LoginRegActivity extends BaseActivity {
     @VisibleForTesting
     public IdlingResource getCountingIdlingResource() {
         return EspressoIdlingResource.getIdlingResource();
+    }
+
+    @Override
+    public void switchToRegFragment() {
+        if (mLoginRegFragment == null) {
+            mLoginRegFragment = LoginRegFragment.newInstance();
+            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginRegFragment, R.id.login_anim_group_2);
+        }
+        getSupportFragmentManager().beginTransaction().
+                hide(mLoginLoginFragment).
+                show(mLoginRegFragment).commit();
     }
 }
