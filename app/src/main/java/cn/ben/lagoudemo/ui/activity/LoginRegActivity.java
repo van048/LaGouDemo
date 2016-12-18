@@ -16,10 +16,10 @@ import cn.ben.lagoudemo.Injection;
 import cn.ben.lagoudemo.R;
 import cn.ben.lagoudemo.constant.Constants;
 import cn.ben.lagoudemo.ui.fragment.LoginLoginFragment;
-import cn.ben.lagoudemo.ui.presenter.LoginPresenter;
+import cn.ben.lagoudemo.ui.presenter.LoginLoginPresenter;
 
-public class LoginActivity extends BaseActivity {
-    private LoginPresenter mLoginPresenter;
+public class LoginRegActivity extends BaseActivity {
+    private LoginLoginPresenter mLoginLoginPresenter;
 
     private View login_animGroup_logo;
     private View login_animGroup_edit_text;
@@ -94,7 +94,7 @@ public class LoginActivity extends BaseActivity {
             MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), loginLoginFragment, R.id.login_anim_group_2);
         }
 
-        mLoginPresenter = new LoginPresenter(
+        mLoginLoginPresenter = new LoginLoginPresenter(
                 Injection.provideLoginRepository(getApplicationContext()), loginLoginFragment);
 
         KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {

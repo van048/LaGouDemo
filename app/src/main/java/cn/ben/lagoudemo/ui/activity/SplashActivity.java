@@ -16,7 +16,7 @@ public class SplashActivity extends ben.cn.library.ui.activity.BaseSplashActivit
 
     @Override
     protected Class<?> getJumpingActivityClass() {
-        return LoginActivity.class;
+        return LoginRegActivity.class;
     }
 
     @Override
