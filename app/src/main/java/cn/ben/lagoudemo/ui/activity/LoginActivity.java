@@ -10,6 +10,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import ben.cn.library.ui.activity.BaseActivity;
+import ben.cn.library.utils.EspressoIdlingResource;
 import ben.cn.library.utils.MyActivityUtils;
 import cn.ben.lagoudemo.Injection;
 import cn.ben.lagoudemo.R;

@@ -92,15 +92,20 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Vi
         login_input_user_name_delete.setOnClickListener(this);
         login_input_pw_delete.setOnClickListener(this);
         login_login_btn.setOnClickListener(this);
-
-        // init state
-        login_login_btn.setEnabled(false);
-        login_input_user_name_edit_text.requestFocus();
     }
 
     private void updateOnTextChanged(View deleteView, boolean isEmpty) {
         login_login_btn.setEnabled(!b_user_name_empty && !b_user_pw_empty);
         deleteView.setVisibility(isEmpty ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // init state
+        login_login_btn.setEnabled(false);
+        login_input_user_name_edit_text.requestFocus();
     }
 
     @Override

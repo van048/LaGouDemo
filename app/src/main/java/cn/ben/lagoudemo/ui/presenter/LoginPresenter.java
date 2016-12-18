@@ -2,6 +2,7 @@ package cn.ben.lagoudemo.ui.presenter;
 
 import android.support.annotation.NonNull;
 
+import ben.cn.library.utils.EspressoIdlingResource;
 import cn.ben.lagoudemo.data.UserAuthInfo;
 import cn.ben.lagoudemo.data.source.LoginDataSource;
 import cn.ben.lagoudemo.data.source.LoginRepository;
