@@ -6,24 +6,24 @@ import ben.cn.library.utils.EspressoIdlingResource;
 import cn.ben.lagoudemo.data.UserAuthInfo;
 import cn.ben.lagoudemo.data.source.LoginDataSource;
 import cn.ben.lagoudemo.data.source.LoginRepository;
-import cn.ben.lagoudemo.ui.contract.LoginLoginContract;
+import cn.ben.lagoudemo.ui.contract.LoginContract;
 
 import static cn.ben.lagoudemo.constant.Constants.ErrorMessage.PW_LENGTH_NOT_RIGHT;
 import static cn.ben.lagoudemo.constant.Constants.Login.PASSWORD_MAX_LEN;
 import static cn.ben.lagoudemo.constant.Constants.Login.PASSWORD_MIN_LEN;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginLoginPresenter implements LoginLoginContract.Presenter {
+public class LoginLoginPresenter implements LoginContract.LoginPresenter {
 
     private final LoginRepository mLoginRepository;
 
-    private final LoginLoginContract.View mLoginView;
+    private final LoginContract.LoginView mLoginLoginView;
 
-    public LoginLoginPresenter(@NonNull LoginRepository loginRepository, @NonNull LoginLoginContract.View loginView) {
+    public LoginLoginPresenter(@NonNull LoginRepository loginRepository, @NonNull LoginContract.LoginView loginLoginView) {
         mLoginRepository = checkNotNull(loginRepository, "loginRepository cannot be null");
-        mLoginView = checkNotNull(loginView, "loginView cannot be null!");
+        mLoginLoginView = checkNotNull(loginLoginView, "loginLoginView cannot be null!");
 
-        mLoginView.setPresenter(this);
+        mLoginLoginView.setPresenter(this);
     }
 
     @Override
@@ -33,7 +33,8 @@ public class LoginLoginPresenter implements LoginLoginContract.Presenter {
     @Override
     public void verifyUser(String name, String password) {
         if (password.length() < PASSWORD_MIN_LEN || password.length() > PASSWORD_MAX_LEN) {
-            mLoginView.showVerifyErrorMessage(PW_LENGTH_NOT_RIGHT.getMessage());
+            if (mLoginLoginView.isActive())
+                mLoginLoginView.showVerifyErrorMessage(PW_LENGTH_NOT_RIGHT.getMessage());
             return;
         }
 
@@ -52,7 +53,8 @@ public class LoginLoginPresenter implements LoginLoginContract.Presenter {
                 if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
                     EspressoIdlingResource.decrement(); // Set app as idle.
                 }
-                mLoginView.moveToMainPage();
+                if (mLoginLoginView.isActive())
+                    mLoginLoginView.moveToMainPage();
             }
 
             @Override
@@ -63,7 +65,8 @@ public class LoginLoginPresenter implements LoginLoginContract.Presenter {
                 if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
                     EspressoIdlingResource.decrement(); // Set app as idle.
                 }
-                mLoginView.showVerifyErrorMessage(errorMessage);
+                if (mLoginLoginView.isActive())
+                    mLoginLoginView.showVerifyErrorMessage(errorMessage);
             }
         });
     }

@@ -18,13 +18,13 @@ import ben.cn.library.ui.fragment.BaseFragment;
 import ben.cn.library.utils.MyToastUtils;
 import cn.ben.lagoudemo.R;
 import cn.ben.lagoudemo.ui.adapter.TextWatcherAdapter;
-import cn.ben.lagoudemo.ui.contract.LoginLoginContract;
+import cn.ben.lagoudemo.ui.contract.LoginContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginLoginFragment extends BaseFragment implements LoginLoginContract.View, View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
+public class LoginLoginFragment extends BaseFragment implements LoginContract.LoginView, View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
-    private LoginLoginContract.Presenter mPresenter;
+    private LoginContract.LoginPresenter mPresenter;
 
     private ImageView login_input_user_name_icon;
     private EditText login_input_user_name_edit_text;
@@ -179,7 +179,7 @@ public class LoginLoginFragment extends BaseFragment implements LoginLoginContra
     }
 
     @Override
-    public void setPresenter(LoginLoginContract.Presenter presenter) {
+    public void setPresenter(LoginContract.LoginPresenter presenter) {
         mPresenter = checkNotNull(presenter);
     }
 

@@ -3,8 +3,8 @@ package cn.ben.lagoudemo.ui.contract;
 import ben.cn.library.ui.activity.BaseView;
 import ben.cn.library.ui.presenter.BasePresenter;
 
-public interface LoginLoginContract {
-    interface View extends BaseView<Presenter> {
+public interface LoginContract {
+    interface LoginView extends BaseView<LoginPresenter> {
         boolean isActive();
 
         void moveToMainPage();
@@ -12,7 +12,7 @@ public interface LoginLoginContract {
         void showVerifyErrorMessage(String errorMessage);
     }
 
-    interface Presenter extends BasePresenter{
+    interface LoginPresenter extends BasePresenter{
         void verifyUser(String name, String password);
     }
 }
