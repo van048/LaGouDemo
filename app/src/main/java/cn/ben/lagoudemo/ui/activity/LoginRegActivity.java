@@ -20,7 +20,7 @@ import cn.ben.lagoudemo.ui.fragment.LoginRegFragment;
 import cn.ben.lagoudemo.ui.presenter.LoginLoginPresenter;
 import cn.ben.lagoudemo.ui.presenter.LoginRegPresenter;
 
-public class LoginRegActivity extends BaseActivity implements LoginLoginFragment.OnRegBtnClickedListener {
+public class LoginRegActivity extends BaseActivity implements LoginLoginFragment.OnRegBtnClickedListener, LoginRegFragment.OnReturnLoginBtnClickedListener {
     private LoginLoginPresenter mLoginLoginPresenter;
     private LoginRegPresenter mLoginRegPresenter;
 
@@ -94,14 +94,7 @@ public class LoginRegActivity extends BaseActivity implements LoginLoginFragment
         login_animGroup_logo = $(R.id.login_anim_group_1);
         login_animGroup_edit_text = $(R.id.login_anim_group_2);
 
-        if (mLoginLoginFragment == null) {
-            mLoginLoginFragment = LoginLoginFragment.newInstance();
-            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginLoginFragment, R.id.login_anim_group_2);
-        }
-
-        if (mLoginLoginPresenter == null)
-            mLoginLoginPresenter = new LoginLoginPresenter(
-                    Injection.provideLoginRepository(getApplicationContext()), mLoginLoginFragment);
+        initLoginFragmentAndPresenter();
 
         KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
             @Override
@@ -147,6 +140,13 @@ public class LoginRegActivity extends BaseActivity implements LoginLoginFragment
 
     @Override
     public void switchToRegFragment() {
+        initRegFragmentAndPresenter();
+        getSupportFragmentManager().beginTransaction().
+                hide(mLoginLoginFragment).
+                show(mLoginRegFragment).commit();
+    }
+
+    private void initRegFragmentAndPresenter() {
         if (mLoginRegFragment == null) {
             mLoginRegFragment = LoginRegFragment.newInstance();
             MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginRegFragment, R.id.login_anim_group_2);
@@ -154,8 +154,25 @@ public class LoginRegActivity extends BaseActivity implements LoginLoginFragment
         if (mLoginRegPresenter == null)
             mLoginRegPresenter = new LoginRegPresenter(
                     Injection.provideLoginRepository(getApplicationContext()), mLoginRegFragment);
+    }
+
+    @Override
+    public void switchToLoginFragment() {
+        initLoginFragmentAndPresenter();
+
         getSupportFragmentManager().beginTransaction().
-                hide(mLoginLoginFragment).
-                show(mLoginRegFragment).commit();
+                hide(mLoginRegFragment).
+                show(mLoginLoginFragment).commit();
+    }
+
+    private void initLoginFragmentAndPresenter() {
+        if (mLoginLoginFragment == null) {
+            mLoginLoginFragment = LoginLoginFragment.newInstance();
+            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginLoginFragment, R.id.login_anim_group_2);
+        }
+
+        if (mLoginLoginPresenter == null)
+            mLoginLoginPresenter = new LoginLoginPresenter(
+                    Injection.provideLoginRepository(getApplicationContext()), mLoginLoginFragment);
     }
 }

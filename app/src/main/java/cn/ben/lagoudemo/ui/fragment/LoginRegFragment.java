@@ -1,5 +1,6 @@
 package cn.ben.lagoudemo.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ import cn.ben.lagoudemo.ui.contract.LoginContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginRegFragment extends BaseFragment implements LoginContract.RegView {
+public class LoginRegFragment extends BaseFragment implements LoginContract.RegView, View.OnClickListener {
 
     private LoginContract.RegPresenter mPresenter;
 
@@ -24,6 +25,9 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
     private ImageView reg_input_phone_icon;
     private ImageView reg_input_captcha_icon;
     private Button reg_confirm_btn;
+    private Button reg_return_login_btn;
+
+    private OnReturnLoginBtnClickedListener mOnReturnLoginBtnClickedListener;
 
     public static LoginRegFragment newInstance() {
         return new LoginRegFragment();
@@ -51,6 +55,9 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
         reg_input_phone_icon = $(R.id.reg_input_phone_icon);
         reg_input_captcha_icon = $(R.id.reg_input_captcha_icon);
         reg_confirm_btn = $(R.id.login_reg_confirm_btn);
+        reg_return_login_btn = $(R.id.login_return_login_btn);
+
+        reg_return_login_btn.setOnClickListener(this);
     }
 
     @Override
@@ -69,5 +76,35 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
         mPresenter.start();
 
         reg_input_phone_edit_text.requestFocus();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnReturnLoginBtnClickedListener = (OnReturnLoginBtnClickedListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement OnReturnLoginBtnClickedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mOnReturnLoginBtnClickedListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.login_return_login_btn:
+                mOnReturnLoginBtnClickedListener.switchToLoginFragment();
+                break;
+        }
+    }
+
+    public interface OnReturnLoginBtnClickedListener {
+        void switchToLoginFragment();
     }
 }
