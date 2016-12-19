@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/reg_input_phone_icon"
                 android:background="#193d3b3b"
-                android:hint="请输入手机号"
+                android:hint="@string/reg_input_phone_hint"
                 android:inputType="phone"
                 android:maxLines="1"
                 android:paddingEnd="40dp"
@@ -65,7 +65,7 @@
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/reg_input_captcha_icon"
                 android:background="#193d3b3b"
-                android:hint="请输入验证码"
+                android:hint="@string/reg_input_captcha_hint"
                 android:inputType="number"
                 android:maxLength="6"
                 android:maxLines="1"
@@ -73,14 +73,6 @@
                 android:paddingStart="10dp"
                 android:textCursorDrawable="@drawable/edit_text_cursor_drawable"
                 android:textSize="@dimen/input_text_size"/>
-
-            <ImageView
-                android:id="@+id/reg_input_captcha_vertical_line"
-                android:layout_width="2dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/reg_input_captcha_get_captcha"
-                android:src="@android:color/darker_gray"/>
 
             <TextView
                 android:id="@+id/reg_input_captcha_get_captcha"
@@ -90,9 +82,17 @@
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="获取验证码"
+                android:text="@string/reg_get_captcha"
                 android:textColor="@color/defaultColorAccent"
                 android:textSize="@dimen/input_text_size"/>
+
+            <ImageView
+                android:id="@+id/reg_input_captcha_vertical_line"
+                android:layout_width="2dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/reg_input_captcha_get_captcha"
+                android:src="@android:color/darker_gray"/>
         </RelativeLayout>
     </RelativeLayout>
 
@@ -115,14 +115,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/reg_agree_icon"
-            android:text="注册代表你已同意"/>
+            android:text="@string/reg_agree_plain_text"/>
 
         <TextView
             android:id="@+id/reg_agree_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/reg_agree_plain_text"
-            android:text="剩蛋用户协议"
+            android:text="@string/reg_agree_link_text"
             android:textColor="@color/defaultColorAccent"/>
     </RelativeLayout>
 
@@ -138,7 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_login_login_btn"
-            android:text="注册"
+            android:text="@string/reg_confirm_text"
             android:textColor="@color/selector_text"/>
     </RelativeLayout>
 
@@ -154,6 +154,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_login_reg_btn"
-            android:text="返回登录"/>
+            android:text="@string/reg_btn_return_login"/>
     </RelativeLayout>
 </RelativeLayout>

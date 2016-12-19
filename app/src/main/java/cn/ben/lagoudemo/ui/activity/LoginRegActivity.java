@@ -98,18 +98,10 @@ public class LoginRegActivity extends BaseActivity implements LoginLoginFragment
             mLoginLoginFragment = LoginLoginFragment.newInstance();
             MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginLoginFragment, R.id.login_anim_group_2);
         }
-        if (mLoginRegFragment == null) {
-            mLoginRegFragment = LoginRegFragment.newInstance();
-            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginRegFragment, R.id.login_anim_group_2);
-        }
-        getSupportFragmentManager().beginTransaction().
-                show(mLoginLoginFragment).
-                hide(mLoginRegFragment).commit();
 
-        mLoginLoginPresenter = new LoginLoginPresenter(
-                Injection.provideLoginRepository(getApplicationContext()), mLoginLoginFragment);
-        mLoginRegPresenter = new LoginRegPresenter(
-                Injection.provideLoginRepository(getApplicationContext()), mLoginRegFragment);
+        if (mLoginLoginPresenter == null)
+            mLoginLoginPresenter = new LoginLoginPresenter(
+                    Injection.provideLoginRepository(getApplicationContext()), mLoginLoginFragment);
 
         KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
             @Override
@@ -159,6 +151,9 @@ public class LoginRegActivity extends BaseActivity implements LoginLoginFragment
             mLoginRegFragment = LoginRegFragment.newInstance();
             MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginRegFragment, R.id.login_anim_group_2);
         }
+        if (mLoginRegPresenter == null)
+            mLoginRegPresenter = new LoginRegPresenter(
+                    Injection.provideLoginRepository(getApplicationContext()), mLoginRegFragment);
         getSupportFragmentManager().beginTransaction().
                 hide(mLoginLoginFragment).
                 show(mLoginRegFragment).commit();

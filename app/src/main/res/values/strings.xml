@@ -6,4 +6,11 @@
     <string name="login_login">登录</string>
     <string name="login_reg">注册拉勾</string>
     <string name="toast_back_pressed">再按一次退出拉勾</string>
+    <string name="reg_input_phone_hint">请输入手机号</string>
+    <string name="reg_input_captcha_hint">请输入验证码</string>
+    <string name="reg_get_captcha">获取验证码</string>
+    <string name="reg_agree_plain_text">注册代表你已同意</string>
+    <string name="reg_agree_link_text">**用户协议</string>
+    <string name="reg_confirm_text">注册</string>
+    <string name="reg_btn_return_login">返回登录</string>
 </resources>
