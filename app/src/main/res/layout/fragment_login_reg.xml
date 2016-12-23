@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -18,7 +19,7 @@
                 android:id="@+id/reg_input_phone_icon"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:src="@android:drawable/ic_media_play"/>
+                android:src="@android:drawable/ic_btn_speak_now"/>
 
             <EditText
                 android:id="@+id/reg_input_phone_edit_text"
@@ -27,12 +28,14 @@
                 android:layout_toEndOf="@id/reg_input_phone_icon"
                 android:background="#193d3b3b"
                 android:hint="@string/reg_input_phone_hint"
-                android:inputType="phone"
+                android:inputType="number"
+                android:maxLength="20"
                 android:maxLines="1"
                 android:paddingEnd="40dp"
                 android:paddingStart="10dp"
                 android:textCursorDrawable="@drawable/edit_text_cursor_drawable"
-                android:textSize="@dimen/input_text_size"/>
+                android:textSize="@dimen/input_text_size"
+                tools:ignore="TextFields"/>
 
             <ImageView
                 android:id="@+id/reg_input_phone_delete"
@@ -57,7 +60,7 @@
                 android:id="@+id/reg_input_captcha_icon"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:src="@android:drawable/ic_lock_lock"/>
+                android:src="@android:drawable/ic_input_add"/>
 
             <EditText
                 android:id="@+id/reg_input_captcha_edit_text"
@@ -76,10 +79,12 @@
 
             <TextView
                 android:id="@+id/reg_input_captcha_get_captcha"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@id/reg_input_captcha_edit_text"
                 android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="@string/reg_get_captcha"

@@ -21,5 +21,6 @@ public interface LoginContract {
     }
 
     interface RegPresenter extends BasePresenter {
+        boolean checkPhoneValidity(String phoneNumber);
     }
 }

@@ -13,4 +13,5 @@
     <string name="reg_agree_link_text">**用户协议</string>
     <string name="reg_confirm_text">注册</string>
     <string name="reg_btn_return_login">返回登录</string>
+    <string name="ret_input_phone_hint">请输入有效的手机号</string>
 </resources>

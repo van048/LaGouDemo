@@ -23,4 +23,10 @@ public class LoginRegPresenter implements LoginContract.RegPresenter {
     @Override
     public void start() {
     }
+
+    @Override
+    public boolean checkPhoneValidity(String phoneNumber) {
+        // TODO: 2016/12/20
+        return true;
+    }
 }
