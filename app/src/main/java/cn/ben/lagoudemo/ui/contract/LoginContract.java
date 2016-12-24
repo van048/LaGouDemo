@@ -18,9 +18,17 @@ public interface LoginContract {
 
     interface RegView extends BaseView<RegPresenter> {
         boolean isActive();
+
+        void showGettingCaptchaUI();
+
+        void showCaptchaGotSuccessUI(String successMessage);
+
+        void showCaptchaGotFailedUI(String errorMessage);
     }
 
     interface RegPresenter extends BasePresenter {
         boolean checkPhoneValidity(String phoneNumber);
+
+        void getCaptcha();
     }
 }

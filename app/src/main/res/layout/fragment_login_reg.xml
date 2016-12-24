@@ -77,26 +77,50 @@
                 android:textCursorDrawable="@drawable/edit_text_cursor_drawable"
                 android:textSize="@dimen/input_text_size"/>
 
-            <TextView
-                android:id="@+id/reg_input_captcha_get_captcha"
+            <RelativeLayout
+                android:id="@+id/reg_input_captcha_get_captcha_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignEnd="@id/reg_input_captcha_edit_text"
-                android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text="@string/reg_get_captcha"
-                android:textColor="@color/defaultColorAccent"
-                android:textSize="@dimen/input_text_size"/>
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:id="@+id/reg_input_captcha_get_captcha"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/reg_get_captcha"
+                    android:textColor="@color/defaultColorAccent"
+                    android:textSize="@dimen/input_text_size"/>
+
+                <TextView
+                    android:id="@+id/reg_input_captcha_get_captcha_count_down"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textColor="@color/defaultColorAccent"
+                    android:textSize="@dimen/input_text_size"
+                    tools:text="60s"/>
+
+                <ProgressBar
+                    android:id="@+id/reg_input_captcha_progress_bar"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"
+                    android:indeterminate="true"
+                    tools:visibility="visible"/>
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/reg_input_captcha_vertical_line"
                 android:layout_width="2dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/reg_input_captcha_get_captcha"
+                android:layout_toStartOf="@id/reg_input_captcha_get_captcha_group"
                 android:src="@android:color/darker_gray"/>
         </RelativeLayout>
     </RelativeLayout>

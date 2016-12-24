@@ -1,6 +1,9 @@
 package cn.ben.lagoudemo.ui.presenter;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
+
+import com.blankj.utilcode.utils.RegexUtils;
 
 import cn.ben.lagoudemo.data.source.LoginRepository;
 import cn.ben.lagoudemo.ui.contract.LoginContract;
@@ -26,7 +29,31 @@ public class LoginRegPresenter implements LoginContract.RegPresenter {
 
     @Override
     public boolean checkPhoneValidity(String phoneNumber) {
-        // TODO: 2016/12/20
-        return true;
+        return RegexUtils.isMobileExact(phoneNumber);
+    }
+
+    @Override
+    public void getCaptcha() {
+        if (mLoginRegView.isActive()) {
+            mLoginRegView.showGettingCaptchaUI();
+        } else {
+            return;
+        }
+        // TODO: 2016/12/24
+
+        // simulate the progress of getting captcha
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mLoginRegView.isActive()) {
+                    // TODO: 2016/12/24
+                    // success
+                    mLoginRegView.showCaptchaGotSuccessUI("success message");
+                    // failed
+//                    mLoginRegView.showCaptchaGotFailedUI("error message");
+                }
+            }
+        }, 3000);
     }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.utils.StringUtils;
@@ -25,6 +26,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class LoginRegFragment extends BaseFragment implements LoginContract.RegView, View.OnClickListener, View.OnFocusChangeListener {
 
+    public static final int MILLIS_COUNT_DOWN = 3000; // TODO: 2016/12/24
+    public static final int COUNT_DOWN_INTERVAL = 1000;
     private LoginContract.RegPresenter mPresenter;
 
     private EditText reg_input_phone_edit_text;
@@ -34,7 +37,10 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
     private ImageView reg_input_phone_delete;
     private Button reg_confirm_btn;
     private Button reg_return_login_btn;
+    private View reg_input_captcha_get_captcha_group;
     private TextView reg_input_captcha_get_captcha;
+    private TextView reg_input_captcha_get_captcha_count_down;
+    private ProgressBar reg_input_captcha_get_captcha_progress_bar;
 
     private OnReturnLoginBtnClickedListener mOnReturnLoginBtnClickedListener;
 
@@ -72,7 +78,10 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
         reg_input_phone_delete = $(R.id.reg_input_phone_delete);
         reg_confirm_btn = $(R.id.login_reg_confirm_btn);
         reg_return_login_btn = $(R.id.login_return_login_btn);
+        reg_input_captcha_get_captcha_group = $(R.id.reg_input_captcha_get_captcha_group);
         reg_input_captcha_get_captcha = $(R.id.reg_input_captcha_get_captcha);
+        reg_input_captcha_get_captcha_count_down = $(R.id.reg_input_captcha_get_captcha_count_down);
+        reg_input_captcha_get_captcha_progress_bar = $(R.id.reg_input_captcha_progress_bar);
 
         reg_input_phone_edit_text.setOnFocusChangeListener(this);
         reg_input_phone_edit_text.addTextChangedListener(new TextWatcherAdapter() {
@@ -94,7 +103,7 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
 
         reg_return_login_btn.setOnClickListener(this);
         reg_input_phone_delete.setOnClickListener(this);
-        reg_input_captcha_get_captcha.setOnClickListener(this);
+        reg_input_captcha_get_captcha_group.setOnClickListener(this);
     }
 
     @Override
@@ -105,6 +114,33 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    @Override
+    public void showGettingCaptchaUI() {
+        b_captcha_get_clicked = true;
+        reg_input_captcha_get_captcha_count_down.setVisibility(View.GONE);
+        reg_input_captcha_get_captcha.setVisibility(View.GONE);
+        reg_input_captcha_get_captcha_progress_bar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showCaptchaGotSuccessUI(String successMessage) {
+        b_captcha_get_clicked = true;
+        reg_input_captcha_get_captcha_count_down.setVisibility(View.VISIBLE);
+        reg_input_captcha_get_captcha.setVisibility(View.GONE);
+        reg_input_captcha_get_captcha_progress_bar.setVisibility(View.GONE);
+        MyToastUtils.showShortToastSafe(getContext(), successMessage, true);
+        startCaptchaCountDown();
+    }
+
+    @Override
+    public void showCaptchaGotFailedUI(String errorMessage) {
+        b_captcha_get_clicked = false;
+        reg_input_captcha_get_captcha_count_down.setVisibility(View.GONE);
+        reg_input_captcha_get_captcha.setVisibility(View.VISIBLE);
+        reg_input_captcha_get_captcha_progress_bar.setVisibility(View.GONE);
+        MyToastUtils.showShortToastSafe(getContext(), errorMessage, true);
     }
 
     @Override
@@ -138,13 +174,14 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
             case R.id.login_return_login_btn:
                 mOnReturnLoginBtnClickedListener.switchToLoginFragment();
                 break;
-            case R.id.reg_input_captcha_get_captcha:
+            case R.id.reg_input_captcha_get_captcha_group:
+                if (b_captcha_get_clicked) return;
                 boolean isPhoneValid = mPresenter.checkPhoneValidity(reg_input_phone_edit_text.getText().toString());
                 if (!isPhoneValid) {
                     MyToastUtils.showShortToastSafe(getContext(), getResources().getString(R.string.ret_input_phone_hint), true);
                     return;
                 }
-                startCountDown();
+                mPresenter.getCaptcha();
                 break;
             case R.id.reg_input_phone_delete:
                 reg_input_phone_edit_text.setText(Constants.EMPTY_STRING);
@@ -152,23 +189,24 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
         }
     }
 
-    private void startCountDown() {
-        if (b_captcha_get_clicked) return;
+    private void startCaptchaCountDown() {
         if (mCountDownTimer == null) {
-            mCountDownTimer = new CountDownTimer(60000, 1000) {
+            mCountDownTimer = new CountDownTimer(MILLIS_COUNT_DOWN, COUNT_DOWN_INTERVAL) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    reg_input_captcha_get_captcha.setText(millisUntilFinished / 1000 + "s");
+                    // TODO: 2016/12/24  
+                    reg_input_captcha_get_captcha_count_down.setText((int) (millisUntilFinished / 1000f) + "s");
                 }
 
                 @Override
                 public void onFinish() {
                     b_captcha_get_clicked = false;
-                    reg_input_captcha_get_captcha.setText(getResources().getString(R.string.reg_agree_plain_text));
+                    reg_input_captcha_get_captcha_count_down.setVisibility(View.GONE);
+                    reg_input_captcha_get_captcha.setVisibility(View.VISIBLE);
+                    reg_input_captcha_get_captcha_progress_bar.setVisibility(View.GONE);
                 }
             };
         }
-        b_captcha_get_clicked = true;
         mCountDownTimer.cancel();
         mCountDownTimer.start();
     }
