@@ -21,6 +21,8 @@ import cn.ben.lagoudemo.ui.presenter.LoginLoginPresenter;
 import cn.ben.lagoudemo.ui.presenter.LoginRegPresenter;
 
 public class LoginRegActivity extends BaseActivity implements LoginLoginFragment.OnRegBtnClickedListener, LoginRegFragment.OnReturnLoginBtnClickedListener {
+    private static final String LOGIN_LOGIN_FRAGMENT_TAG = "login";
+    private static final String LOGIN_REG_FRAGMENT_TAG = "reg";
     private LoginLoginPresenter mLoginLoginPresenter;
     private LoginRegPresenter mLoginRegPresenter;
 
@@ -147,9 +149,10 @@ public class LoginRegActivity extends BaseActivity implements LoginLoginFragment
     }
 
     private void initRegFragmentAndPresenter() {
+        mLoginRegFragment = (LoginRegFragment) getSupportFragmentManager().findFragmentByTag(LOGIN_REG_FRAGMENT_TAG);
         if (mLoginRegFragment == null) {
             mLoginRegFragment = LoginRegFragment.newInstance();
-            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginRegFragment, R.id.login_anim_group_2);
+            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginRegFragment, R.id.login_anim_group_2, LOGIN_REG_FRAGMENT_TAG);
         }
         if (mLoginRegPresenter == null)
             mLoginRegPresenter = new LoginRegPresenter(
@@ -166,9 +169,10 @@ public class LoginRegActivity extends BaseActivity implements LoginLoginFragment
     }
 
     private void initLoginFragmentAndPresenter() {
+        mLoginLoginFragment = (LoginLoginFragment) getSupportFragmentManager().findFragmentByTag(LOGIN_LOGIN_FRAGMENT_TAG);
         if (mLoginLoginFragment == null) {
             mLoginLoginFragment = LoginLoginFragment.newInstance();
-            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginLoginFragment, R.id.login_anim_group_2);
+            MyActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mLoginLoginFragment, R.id.login_anim_group_2, LOGIN_LOGIN_FRAGMENT_TAG);
         }
 
         if (mLoginLoginPresenter == null)
