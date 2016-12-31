@@ -2,6 +2,7 @@ package cn.ben.lagoudemo.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public class LoginLoginFragment extends BaseFragment implements LoginContract.Lo
     private boolean b_user_name_empty = true;
     private boolean b_user_pw_empty = true;
 
+    @NonNull
     private OnRegBtnClickedListener mOnRegBtnClickedListener;
 
     public static LoginLoginFragment newInstance() {
