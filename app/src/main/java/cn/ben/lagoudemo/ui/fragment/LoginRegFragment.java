@@ -149,8 +149,14 @@ public class LoginRegFragment extends BaseFragment implements LoginContract.RegV
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
 
-        reg_input_phone_edit_text.requestFocus();
+    @Override
+    public void onHiddenChanged(boolean isHidden) {
+        super.onHiddenChanged(isHidden);
+        if (!isHidden) {
+            reg_input_phone_edit_text.requestFocus();
+        }
     }
 
     @Override
